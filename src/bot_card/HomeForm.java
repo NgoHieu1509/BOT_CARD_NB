@@ -15,6 +15,11 @@ public class HomeForm extends javax.swing.JFrame {
      */
     public HomeForm() {
         initComponents();
+        jpnINFO.setVisible(true);
+       jpnPIN.setVisible(false);
+       jpnSoDu.setVisible(false);
+       jpnHISTORY.setVisible(false);
+       jpnNapTien.setVisible(false);
     }
 
     /**
@@ -64,26 +69,22 @@ public class HomeForm extends javax.swing.JFrame {
         btnEdit = new javax.swing.JButton();
         jpnPIN = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
         btnCanPIN = new javax.swing.JButton();
         btnupPIN = new javax.swing.JButton();
-        jpnHISTORY = new javax.swing.JPanel();
-        jLabel23 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jlbTIM = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jpnSoDu = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jTextField9 = new javax.swing.JTextField();
         btnThoat = new javax.swing.JButton();
         btnNapThem1 = new javax.swing.JButton();
+        jpnHISTORY = new javax.swing.JPanel();
+        jLabel23 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jpnNapTien = new javax.swing.JPanel();
         jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
@@ -256,9 +257,9 @@ public class HomeForm extends javax.swing.JFrame {
         });
         jpnINFO.add(btnup1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 360, -1, 40));
 
-        jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel17.setText("THÔNG TIN CÁ NHÂN");
-        jpnINFO.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, -1, -1));
+        jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jLabel17.setText("NHẬP THÔNG TIN CÁ NHÂN");
+        jpnINFO.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, -1, -1));
 
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel18.setText("Biển số xe : ");
@@ -276,6 +277,12 @@ public class HomeForm extends javax.swing.JFrame {
         jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel21.setText("Quê Quán :");
         jpnINFO.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, -1, -1));
+
+        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField6ActionPerformed(evt);
+            }
+        });
         jpnINFO.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 320, 40));
         jpnINFO.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 220, 320, 40));
         jpnINFO.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 280, 320, 40));
@@ -304,24 +311,25 @@ public class HomeForm extends javax.swing.JFrame {
 
         jpnPIN.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel12.setText("THAY ĐỔI MÃ PIN");
-        jpnPIN.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 80, -1, -1));
-
-        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel14.setText("Mã pin cũ :");
-        jpnPIN.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 150, -1, -1));
+        jpnPIN.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 80, -1, -1));
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel15.setText("Nhập lại :");
-        jpnPIN.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, -1, -1));
+        jLabel15.setText("Xác nhận mã pin mới:");
+        jpnPIN.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, -1, -1));
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel16.setText("Mã pin mới :");
-        jpnPIN.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 290, -1, -1));
-        jpnPIN.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 140, 320, 40));
+        jLabel16.setText("Nhập mã pin mới:");
+        jpnPIN.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, -1, -1));
+
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
         jpnPIN.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 220, 320, 40));
-        jpnPIN.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 280, 320, 40));
+        jpnPIN.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 150, 320, 40));
 
         btnCanPIN.setBackground(new java.awt.Color(255, 102, 102));
         btnCanPIN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -331,7 +339,7 @@ public class HomeForm extends javax.swing.JFrame {
                 btnCanPINActionPerformed(evt);
             }
         });
-        jpnPIN.add(btnCanPIN, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 370, 120, 40));
+        jpnPIN.add(btnCanPIN, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 320, 120, 40));
 
         btnupPIN.setBackground(new java.awt.Color(255, 102, 102));
         btnupPIN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -341,40 +349,9 @@ public class HomeForm extends javax.swing.JFrame {
                 btnupPINActionPerformed(evt);
             }
         });
-        jpnPIN.add(btnupPIN, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 370, 120, 40));
+        jpnPIN.add(btnupPIN, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 320, 120, 40));
 
         jPanel3.add(jpnPIN, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 720, 490));
-
-        jpnHISTORY.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel23.setText("LỊCH SỬ GIAO DỊCH");
-        jpnHISTORY.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, -1, -1));
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "STT", "Mã GD", "Số Phí", "Ngày GD", "Số Dư còn lại", "Trạng Thái"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        jpnHISTORY.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 700, 300));
-
-        jlbTIM.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jlbTIM.setText("Tìm Kiếm");
-        jpnHISTORY.add(jlbTIM, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 100, -1, -1));
-
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-        jpnHISTORY.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 92, 160, 30));
-
-        jPanel3.add(jpnHISTORY, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 720, 490));
 
         jpnSoDu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -412,6 +389,26 @@ public class HomeForm extends javax.swing.JFrame {
         jpnSoDu.add(btnNapThem1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 340, 120, 40));
 
         jPanel3.add(jpnSoDu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 720, 490));
+
+        jpnHISTORY.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel23.setText("LỊCH SỬ GIAO DỊCH");
+        jpnHISTORY.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, -1, -1));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "STT", "Mã GD", "Số Phí", "Ngày GD", "Số Dư còn lại", "Trạng Thái"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        jpnHISTORY.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 700, 360));
+
+        jPanel3.add(jpnHISTORY, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 720, 490));
 
         jpnNapTien.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -457,23 +454,43 @@ public class HomeForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jlbINFOMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbINFOMouseClicked
-        // TODO add your handling code here:
+       jpnINFO.setVisible(true);
+       jpnPIN.setVisible(false);
+       jpnSoDu.setVisible(false);
+       jpnHISTORY.setVisible(false);
+       jpnNapTien.setVisible(false);
     }//GEN-LAST:event_jlbINFOMouseClicked
 
     private void jlbPINMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbPINMouseClicked
-        // TODO add your handling code here:
+       jpnINFO.setVisible(false);
+       jpnPIN.setVisible(true);
+       jpnSoDu.setVisible(false);
+       jpnHISTORY.setVisible(false);
+       jpnNapTien.setVisible(false);
     }//GEN-LAST:event_jlbPINMouseClicked
 
     private void jlbSoDuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbSoDuMouseClicked
-        // TODO add your handling code here:
+       jpnINFO.setVisible(false);
+       jpnPIN.setVisible(false);
+       jpnSoDu.setVisible(true);
+       jpnHISTORY.setVisible(false);
+       jpnNapTien.setVisible(false);
     }//GEN-LAST:event_jlbSoDuMouseClicked
 
     private void jlbHisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbHisMouseClicked
-        // TODO add your handling code here:
+       jpnINFO.setVisible(false);
+       jpnPIN.setVisible(false);
+       jpnSoDu.setVisible(false);
+       jpnHISTORY.setVisible(true);
+       jpnNapTien.setVisible(false);
     }//GEN-LAST:event_jlbHisMouseClicked
 
     private void jlbNapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbNapMouseClicked
-        // TODO add your handling code here:
+       jpnINFO.setVisible(false);
+       jpnPIN.setVisible(false);
+       jpnSoDu.setVisible(false);
+       jpnHISTORY.setVisible(false);
+       jpnNapTien.setVisible(true);
     }//GEN-LAST:event_jlbNapMouseClicked
 
     private void jlbConnectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbConnectMouseClicked
@@ -506,11 +523,12 @@ public class HomeForm extends javax.swing.JFrame {
 
     private void btnNapThem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNapThem1ActionPerformed
         // TODO add your handling code here:
+        jpnINFO.setVisible(false);
+       jpnPIN.setVisible(false);
+       jpnSoDu.setVisible(false);
+       jpnHISTORY.setVisible(false);
+       jpnNapTien.setVisible(true);
     }//GEN-LAST:event_btnNapThem1ActionPerformed
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
         // TODO add your handling code here:
@@ -524,6 +542,15 @@ public class HomeForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jlbCancelMouseClicked
 
+    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField6ActionPerformed
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
+
+    
     /**
      * @param args the command line arguments
      */
@@ -574,7 +601,6 @@ public class HomeForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
@@ -595,9 +621,7 @@ public class HomeForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
@@ -612,7 +636,6 @@ public class HomeForm extends javax.swing.JFrame {
     private javax.swing.JLabel jlbNap;
     private javax.swing.JLabel jlbPIN;
     private javax.swing.JLabel jlbSoDu;
-    private javax.swing.JLabel jlbTIM;
     private javax.swing.JPanel jpnConnect;
     private javax.swing.JPanel jpnHISTORY;
     private javax.swing.JPanel jpnINFO;

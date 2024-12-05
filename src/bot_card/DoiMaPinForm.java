@@ -55,10 +55,12 @@ public class DoiMaPinForm extends javax.swing.JFrame {
         txtConfirmPin.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtConfirmPin.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Đổi mã PIN");
 
+        btnSave.setBackground(new java.awt.Color(255, 102, 102));
+        btnSave.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnSave.setText("Lưu");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -66,6 +68,8 @@ public class DoiMaPinForm extends javax.swing.JFrame {
             }
         });
 
+        btnExit.setBackground(new java.awt.Color(255, 102, 102));
+        btnExit.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnExit.setText("Thoát");
         btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
