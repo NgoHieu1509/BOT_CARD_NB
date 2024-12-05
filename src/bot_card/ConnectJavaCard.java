@@ -58,6 +58,26 @@ public class ConnectJavaCard {
     }
   return kq;
  }
+  
+public boolean disconnectCard(){
+    try {
+         TerminalFactory factory = TerminalFactory.getDefault();
+        List<CardTerminal> terminals = factory.terminals().list();
+        System.out.println("Terminals: " + terminals);
+
+   // Use the first terminal
+         CardTerminal terminal = terminals.get(0);
+
+   // Connect wit hthe card
+         Card card = terminal.connect("*");
+         card.disconnect(true);
+         return true;
+    } catch (Exception e) {
+        System.out.println("ERROR::::::::"+e);
+    }
+    return false;
+}
+  
 public boolean createPIN(String pin){
         
         byte[] pinbyte =  pin.getBytes();

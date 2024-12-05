@@ -4,6 +4,8 @@
  */
 package bot_card;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author N ~ N
@@ -20,6 +22,12 @@ public class HomeForm extends javax.swing.JFrame {
        jpnSoDu.setVisible(false);
        jpnHISTORY.setVisible(false);
        jpnNapTien.setVisible(false);
+       
+       jTextField5.setEnabled(false);
+       jTextField6.setEnabled(false);
+       jTextField7.setEnabled(false);
+       jTextField8.setEnabled(false);
+       
     }
 
     /**
@@ -75,6 +83,8 @@ public class HomeForm extends javax.swing.JFrame {
         jTextField4 = new javax.swing.JTextField();
         btnCanPIN = new javax.swing.JButton();
         btnupPIN = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
         jpnSoDu = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
@@ -313,7 +323,7 @@ public class HomeForm extends javax.swing.JFrame {
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel12.setText("THAY ĐỔI MÃ PIN");
-        jpnPIN.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 80, -1, -1));
+        jpnPIN.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, -1, -1));
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel15.setText("Xác nhận mã pin mới:");
@@ -350,6 +360,11 @@ public class HomeForm extends javax.swing.JFrame {
             }
         });
         jpnPIN.add(btnupPIN, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 320, 120, 40));
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel14.setText("Mã pin cũ :");
+        jpnPIN.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 100, -1));
+        jpnPIN.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 320, 40));
 
         jPanel3.add(jpnPIN, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 720, 490));
 
@@ -495,14 +510,40 @@ public class HomeForm extends javax.swing.JFrame {
 
     private void jlbConnectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbConnectMouseClicked
         // TODO add your handling code here:
+        ConnectJavaCard disConnect = new ConnectJavaCard();
+        disConnect.disconnectCard();
     }//GEN-LAST:event_jlbConnectMouseClicked
 
     private void btnupPINActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnupPINActionPerformed
         // TODO add your handling code here:
+         String oldPin = jTextField2.getText();
+        String newPin = jTextField4.getText();
+        String cofirmPin = jTextField3.getText();
+        
+        if(newPin.equals(cofirmPin) && !newPin.equals(oldPin)){
+            ConnectJavaCard connect = new ConnectJavaCard();
+            if(connect.ChangePIN(oldPin, newPin)){
+                System.out.println("Đổi mã PIN thành công!");
+                jTextField2.setText("");
+                jTextField4.setText("");
+                jTextField3.setText("");
+            }
+            else{
+                System.out.println("Đổi mã PIN không thành công!");
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Kiểm tra mã PIN");
+        }
     }//GEN-LAST:event_btnupPINActionPerformed
 
     private void btnCanPINActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCanPINActionPerformed
         // TODO add your handling code here:
+        jpnINFO.setVisible(true);
+       jpnPIN.setVisible(false);
+       jpnSoDu.setVisible(false);
+       jpnHISTORY.setVisible(false);
+       jpnNapTien.setVisible(false);
     }//GEN-LAST:event_btnCanPINActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
@@ -540,6 +581,7 @@ public class HomeForm extends javax.swing.JFrame {
 
     private void jlbCancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbCancelMouseClicked
         // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_jlbCancelMouseClicked
 
     private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
@@ -601,6 +643,7 @@ public class HomeForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
@@ -622,6 +665,7 @@ public class HomeForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField10;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
