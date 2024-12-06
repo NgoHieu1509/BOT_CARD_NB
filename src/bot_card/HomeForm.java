@@ -16,8 +16,8 @@ public class HomeForm extends javax.swing.JFrame {
      * Creates new form HomeForm
      */
     public HomeForm() {
-        initComponents();
-        jpnINFO.setVisible(true);
+       initComponents();
+       jpnINFO.setVisible(true);
        jpnPIN.setVisible(false);
        jpnSoDu.setVisible(false);
        jpnHISTORY.setVisible(false);
@@ -581,9 +581,16 @@ public class HomeForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jlbCancelMouseClicked
-
+    
+    // Field name
     private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
         // TODO add your handling code here:
+        ConnectJavaCard card = new ConnectJavaCard();
+        
+        
+        
+        
+        
     }//GEN-LAST:event_jTextField6ActionPerformed
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed

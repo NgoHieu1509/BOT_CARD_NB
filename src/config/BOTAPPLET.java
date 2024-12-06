@@ -25,12 +25,13 @@ public class BOTAPPLET {
     
     public final static byte INS_CHANGE_INFORMATION = (byte) 0x52;
     public final static byte INS_CREATE_INFORMATION = (byte)0x50;
-    public final static byte INS_OUT_INFORMATION = (byte)0x51;
     
-    public final static byte OUT_ID = (byte)0x01;
-    public final static byte OUT_NAME = (byte)0x02;
-    public final static byte OUT_DATE = (byte)0x03;
-    public final static byte OUT_PHONE = (byte)0x04;
+    public final static byte INS_SET_DATA = (byte)0x01;
+    public final static byte INS_GET_DATA = (byte)0x02;
+    public final static byte P1_OUT_NAME = (byte)0x01;
+    public final static byte P1_OUT_DOB = (byte)0x02;
+    public final static byte P1_OUT_ADDRESS = (byte)0x03;
+    public final static byte P1_OUT_NUMBER_PLATE= (byte)0x04;
     
     public final static byte INS_CREATE_IMAGE = (byte)0x53;
     public final static byte INS_CREATE_SIZEIMAGE = (byte)0x54;//countanh
