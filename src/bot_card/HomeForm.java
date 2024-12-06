@@ -524,9 +524,7 @@ public class HomeForm extends javax.swing.JFrame {
             ConnectJavaCard connect = new ConnectJavaCard();
             if(connect.ChangePIN(oldPin, newPin)){
                 System.out.println("Đổi mã PIN thành công!");
-                jTextField2.setText("");
-                jTextField4.setText("");
-                jTextField3.setText("");
+                new loginForm().setVisible(true);
             }
             else{
                 System.out.println("Đổi mã PIN không thành công!");

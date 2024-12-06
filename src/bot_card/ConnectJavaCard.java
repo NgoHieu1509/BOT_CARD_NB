@@ -77,6 +77,28 @@ public boolean disconnectCard(){
     }
     return false;
 }
+
+   public void setUp(){
+        
+        try{
+            
+            TerminalFactory factory = TerminalFactory.getDefault();
+            List<CardTerminal> terminals = factory.terminals().list();
+            
+            CardTerminal terminal = terminals.get(0);
+            
+            Card card = terminal.connect("*");
+            
+            CardChannel channel = card.getBasicChannel();
+            
+            ResponseAPDU answer = channel.transmit(new CommandAPDU(0xB0,config.BOTAPPLET.INS_SETUP,0x00,0x00));
+            
+        }
+        catch(Exception ex){
+            //return "Error";
+        }
+    
+    }
   
 public boolean createPIN(String pin){
         

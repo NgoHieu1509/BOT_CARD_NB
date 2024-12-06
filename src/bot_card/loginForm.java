@@ -124,7 +124,7 @@ public class loginForm extends javax.swing.JFrame {
 
         btnSwitch.setBackground(new java.awt.Color(153, 255, 102));
         btnSwitch.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnSwitch.setText("Go to Admin login");
+        btnSwitch.setText("Go to Admin");
         btnSwitch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSwitchActionPerformed(evt);
@@ -156,7 +156,7 @@ public class loginForm extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSwitch)
-                .addGap(58, 58, 58))
+                .addGap(75, 75, 75))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,6 +183,7 @@ public class loginForm extends javax.swing.JFrame {
 
     private void btnSwitchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSwitchActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnSwitchActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
@@ -209,7 +210,7 @@ public class loginForm extends javax.swing.JFrame {
                 jCheckBox1.setEnabled(true);
                 btnLoginUser.setEnabled(true);
                 firstUSE = (int) ((connect.data)[0] & 0xFF);
-                //connect.setUp();
+                connect.setUp();
             } else {
                 JOptionPane.showMessageDialog(null, "Kết nối bị lỗi");
             }

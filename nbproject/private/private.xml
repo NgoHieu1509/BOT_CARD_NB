@@ -3,15 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/JavaP/BOT_CARD/src/bot_card/QuanTriForm.java</file>
             <file>file:/D:/JavaP/BOT_CARD/src/config/STATUS.java</file>
             <file>file:/D:/JavaP/BOT_CARD/src/config/BOTAPPLET.java</file>
+            <file>file:/D:/JavaP/BOT_CARD/src/bot_card/loginForm.java</file>
             <file>file:/D:/JavaP/BOT_CARD/src/bot_card/ConnectJavaCard.java</file>
             <file>file:/D:/JavaP/BOT_CARD/src/images/bglogin.jpg</file>
-            <file>file:/D:/JavaP/BOT_CARD/src/bot_card/DangNhapForm.java</file>
             <file>file:/D:/JavaP/BOT_CARD/src/images/Trang.jpg</file>
             <file>file:/D:/JavaP/BOT_CARD/src/config/RSAAPPLET.java</file>
             <file>file:/D:/JavaP/BOT_CARD/src/bot_card/DoiMaPinForm.java</file>
+            <file>file:/D:/JavaP/BOT_CARD/src/bot_card/HomeForm.java</file>
         </group>
     </open-files>
 </project-private>
