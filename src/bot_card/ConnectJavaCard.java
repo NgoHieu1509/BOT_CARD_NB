@@ -272,25 +272,25 @@ public boolean createPIN(String pin){
         }
     }
   
-    private ResponseAPDU sendRequest(){
+    public ResponseAPDU sendRequest(CommandAPDU commandAPDU){
         ResponseAPDU respond;
         String kq = connectapplet();
-        if(!kq.equals("9000")) {
+        if(!kq.contains("SW=9000")) {
             System.out.println("Connection error");
-        }
+        } else {
         
-        try {
-            TerminalFactory factory = TerminalFactory.getDefault();
-            List<CardTerminal> terminals = factory.terminals().list();
-            CardTerminal terminal = terminals.get(0);
-            Card card = terminal.connect("*");
-            CardChannel channel = card.getBasicChannel();
-            
-            respond = channel.transmit(
-                    new CommandAPDU(0x00,config.BOTAPPLET.INS_GET_DATA,config.BOTAPPLET.P1_OUT_NAME,0x00)
-            );
-            return respond;
-        } catch (CardException e) {
+            try {
+                TerminalFactory factory = TerminalFactory.getDefault();
+                List<CardTerminal> terminals = factory.terminals().list();
+                CardTerminal terminal = terminals.get(0);
+                Card card = terminal.connect("*");
+                CardChannel channel = card.getBasicChannel();
+
+                respond = channel.transmit(commandAPDU);
+                return respond;
+            } catch (CardException e) {
+
+            }
             
         }
         return null;
