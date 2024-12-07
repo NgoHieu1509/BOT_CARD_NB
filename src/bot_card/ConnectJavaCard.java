@@ -12,6 +12,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.smartcardio.Card;
 import javax.smartcardio.CardChannel;
+import javax.smartcardio.CardException;
 import javax.smartcardio.CardTerminal;
 import javax.smartcardio.CommandAPDU;
 import javax.smartcardio.ResponseAPDU;
@@ -50,12 +51,12 @@ public class ConnectJavaCard {
    byte[] aid = {(byte) 0x11,0x22,0x33,0x44,0x55,0x01};
    ResponseAPDU answer = channel.transmit(new CommandAPDU(0x00, 0xA4, 0x04, 0x00, aid));
    kq = answer.toString();
-    data = answer.getData();
+   data = answer.getData();
    System.out.println("answer::::: " + answer.toString());
-     return kq;
+   return kq;
    } catch(Exception e) {
    System.out.println("Error::::: " + e.toString());
-    }
+   }
   return kq;
  }
   
@@ -269,5 +270,29 @@ public boolean createPIN(String pin){
         catch(Exception ex){
             return false;
         }
+    }
+  
+    public ResponseAPDU sendRequest(CommandAPDU commandAPDU){
+        ResponseAPDU respond;
+        String kq = connectapplet();
+        if(!kq.contains("SW=9000")) {
+            System.out.println("Connection error");
+        } else {
+        
+            try {
+                TerminalFactory factory = TerminalFactory.getDefault();
+                List<CardTerminal> terminals = factory.terminals().list();
+                CardTerminal terminal = terminals.get(0);
+                Card card = terminal.connect("*");
+                CardChannel channel = card.getBasicChannel();
+
+                respond = channel.transmit(commandAPDU);
+                return respond;
+            } catch (CardException e) {
+
+            }
+            
+        }
+        return null;
     }
 }
