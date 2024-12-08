@@ -4,7 +4,16 @@
  */
 package bot_card;
 
+import java.awt.HeadlessException;
+import javax.smartcardio.CommandAPDU;
+import javax.smartcardio.ResponseAPDU;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 
 /**
  *
@@ -16,8 +25,8 @@ public class HomeForm extends javax.swing.JFrame {
      * Creates new form HomeForm
      */
     public HomeForm() {
-        initComponents();
-        jpnINFO.setVisible(true);
+       initComponents();
+       jpnINFO.setVisible(true);
        jpnPIN.setVisible(false);
        jpnSoDu.setVisible(false);
        jpnHISTORY.setVisible(false);
@@ -28,6 +37,80 @@ public class HomeForm extends javax.swing.JFrame {
        jTextField7.setEnabled(false);
        jTextField8.setEnabled(false);
        
+       // Field 6 - name
+       jTextField6.setText(getDataString(config.BOTAPPLET.P1_OUT_NAME));
+       // Field 7 - dob
+       jTextField7.setText(getDataString(config.BOTAPPLET.P1_OUT_DOB));
+       // Field 8 - address
+       jTextField8.setText(getDataString(config.BOTAPPLET.P1_OUT_ADDRESS));
+       // Field 5 - Number plate
+       jTextField5.setText(getDataString(config.BOTAPPLET.P1_OUT_NUMBER_PLATE));
+       
+    }
+
+    public HomeForm(JButton btnCanPIN, JButton btnEdit, JButton btnHuy, JButton btnNapThem1, JButton btnNapTien, JButton btnThoat, JButton btnUP, JButton btnup1, JButton btnupPIN, JLabel jLabel1, JLabel jLabel10, JLabel jLabel12, JLabel jLabel13, JLabel jLabel14, JLabel jLabel15, JLabel jLabel16, JLabel jLabel17, JLabel jLabel18, JLabel jLabel19, JLabel jLabel2, JLabel jLabel20, JLabel jLabel21, JLabel jLabel22, JLabel jLabel23, JLabel jLabel24, JLabel jLabel25, JLabel jLabel3, JLabel jLabel4, JLabel jLabel8, JPanel jPanel1, JPanel jPanel2, JPanel jPanel3, JScrollPane jScrollPane1, JTable jTable1, JTextField jTextField10, JTextField jTextField2, JTextField jTextField3, JTextField jTextField4, JTextField jTextField5, JTextField jTextField6, JTextField jTextField7, JTextField jTextField8, JTextField jTextField9, JLabel jlbCancel, JLabel jlbConnect, JLabel jlbHis, JLabel jlbINFO, JLabel jlbNap, JLabel jlbPIN, JLabel jlbSoDu, JPanel jpnConnect, JPanel jpnHISTORY, JPanel jpnINFO, JPanel jpnNapTien, JPanel jpnPIN, JPanel jpnSoDu, JPanel jpnbank1, JPanel jpnhis, JPanel jpnif2, JPanel jpnpin, JPanel jpnsoDu2, JLabel juploadpt1) throws HeadlessException {
+        this.btnCanPIN = btnCanPIN;
+        this.btnEdit = btnEdit;
+        this.btnHuy = btnHuy;
+        this.btnNapThem1 = btnNapThem1;
+        this.btnNapTien = btnNapTien;
+        this.btnThoat = btnThoat;
+        this.btnUP = btnUP;
+        this.btnup1 = btnup1;
+        this.btnupPIN = btnupPIN;
+        this.jLabel1 = jLabel1;
+        this.jLabel10 = jLabel10;
+        this.jLabel12 = jLabel12;
+        this.jLabel13 = jLabel13;
+        this.jLabel14 = jLabel14;
+        this.jLabel15 = jLabel15;
+        this.jLabel16 = jLabel16;
+        this.jLabel17 = jLabel17;
+        this.jLabel18 = jLabel18;
+        this.jLabel19 = jLabel19;
+        this.jLabel2 = jLabel2;
+        this.jLabel20 = jLabel20;
+        this.jLabel21 = jLabel21;
+        this.jLabel22 = jLabel22;
+        this.jLabel23 = jLabel23;
+        this.jLabel24 = jLabel24;
+        this.jLabel25 = jLabel25;
+        this.jLabel3 = jLabel3;
+        this.jLabel4 = jLabel4;
+        this.jLabel8 = jLabel8;
+        this.jPanel1 = jPanel1;
+        this.jPanel2 = jPanel2;
+        this.jPanel3 = jPanel3;
+        this.jScrollPane1 = jScrollPane1;
+        this.jTable1 = jTable1;
+        this.jTextField10 = jTextField10;
+        this.jTextField2 = jTextField2;
+        this.jTextField3 = jTextField3;
+        this.jTextField4 = jTextField4;
+        this.jTextField5 = jTextField5;
+        this.jTextField6 = jTextField6;
+        this.jTextField7 = jTextField7;
+        this.jTextField8 = jTextField8;
+        this.jTextField9 = jTextField9;
+        this.jlbCancel = jlbCancel;
+        this.jlbConnect = jlbConnect;
+        this.jlbHis = jlbHis;
+        this.jlbINFO = jlbINFO;
+        this.jlbNap = jlbNap;
+        this.jlbPIN = jlbPIN;
+        this.jlbSoDu = jlbSoDu;
+        this.jpnConnect = jpnConnect;
+        this.jpnHISTORY = jpnHISTORY;
+        this.jpnINFO = jpnINFO;
+        this.jpnNapTien = jpnNapTien;
+        this.jpnPIN = jpnPIN;
+        this.jpnSoDu = jpnSoDu;
+        this.jpnbank1 = jpnbank1;
+        this.jpnhis = jpnhis;
+        this.jpnif2 = jpnif2;
+        this.jpnpin = jpnpin;
+        this.jpnsoDu2 = jpnsoDu2;
+        this.juploadpt1 = juploadpt1;
     }
 
     /**
@@ -268,8 +351,9 @@ public class HomeForm extends javax.swing.JFrame {
         jpnINFO.add(btnup1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 360, -1, 40));
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        jLabel17.setText("NHẬP THÔNG TIN CÁ NHÂN");
+        jLabel17.setText("THÔNG TIN CÁ NHÂN");
         jpnINFO.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, -1, -1));
+        jLabel17.getAccessibleContext().setAccessibleName("THÔNG TIN CÁ NHÂN");
 
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel18.setText("Biển số xe : ");
@@ -318,6 +402,7 @@ public class HomeForm extends javax.swing.JFrame {
         jpnINFO.add(btnEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 440, 120, 40));
 
         jPanel3.add(jpnINFO, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 720, 490));
+        jpnINFO.getAccessibleContext().setAccessibleDescription("");
 
         jpnPIN.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -468,6 +553,27 @@ public class HomeForm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private String getDataString(byte p1) {
+        
+        ConnectJavaCard card = new ConnectJavaCard();
+        String kq = "";
+        try {
+            ResponseAPDU respond = card.sendRequest(
+                    new CommandAPDU(0x00,config.BOTAPPLET.INS_GET_DATA,p1,0x00)
+            );
+
+            String result = Integer.toHexString(respond.getSW());
+            if(result.equals("9000")) {
+                kq = hexToString(respond.getData());
+            } else {
+                System.out.println("Error command APDU");
+            }
+        } catch(Exception e) {
+                
+        }
+        return kq;
+    }
+    
     private void jlbINFOMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbINFOMouseClicked
        jpnINFO.setVisible(true);
        jpnPIN.setVisible(false);
@@ -544,8 +650,14 @@ public class HomeForm extends javax.swing.JFrame {
        jpnNapTien.setVisible(false);
     }//GEN-LAST:event_btnCanPINActionPerformed
 
+    // Edit button event
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
+        System.out.println("Edit button clicked");
+       jTextField5.setEnabled(true);
+       jTextField6.setEnabled(true);
+       jTextField7.setEnabled(true);
+       jTextField8.setEnabled(true);
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnUPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUPActionPerformed
@@ -581,7 +693,8 @@ public class HomeForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jlbCancelMouseClicked
-
+    
+    // Field name
     private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField6ActionPerformed
@@ -621,12 +734,20 @@ public class HomeForm extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new HomeForm().setVisible(true);
             }
         });
     }
 
+    public static String hexToString(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) {
+            sb.append((char) b); // Chuyển đổi byte sang ký tự
+        }
+        return sb.toString();
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCanPIN;
     private javax.swing.JButton btnEdit;
