@@ -31,6 +31,7 @@ public class HomeForm extends javax.swing.JFrame {
        jpnSoDu.setVisible(false);
        jpnHISTORY.setVisible(false);
        jpnNapTien.setVisible(false);
+       jpnCHECKOUT.setVisible(false);
        
        jTextField5.setEnabled(false);
        jTextField6.setEnabled(false);
@@ -139,6 +140,8 @@ public class HomeForm extends javax.swing.JFrame {
         jpnbank1 = new javax.swing.JPanel();
         jlbNap = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jpnCheckOut = new javax.swing.JPanel();
+        jlbCheckOut = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -174,6 +177,12 @@ public class HomeForm extends javax.swing.JFrame {
         jTextField9 = new javax.swing.JTextField();
         btnThoat = new javax.swing.JButton();
         btnNapThem1 = new javax.swing.JButton();
+        jpnCHECKOUT = new javax.swing.JPanel();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        jTextField11 = new javax.swing.JTextField();
+        btnThoat1 = new javax.swing.JButton();
+        btnCheckOut = new javax.swing.JButton();
         jpnHISTORY = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -201,7 +210,7 @@ public class HomeForm extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/cog.png"))); // NOI18N
         jLabel4.setText("Tùy Chọn");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 560, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
@@ -239,7 +248,7 @@ public class HomeForm extends javax.swing.JFrame {
         });
         jpnhis.add(jlbHis, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, -1, -1));
 
-        jPanel1.add(jpnhis, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 240, 40));
+        jPanel1.add(jpnhis, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 240, 40));
 
         jpnif2.setBackground(new java.awt.Color(102, 102, 102));
         jpnif2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -271,7 +280,7 @@ public class HomeForm extends javax.swing.JFrame {
         });
         jpnConnect.add(jlbConnect, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, -1, -1));
 
-        jPanel1.add(jpnConnect, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 540, 240, 40));
+        jPanel1.add(jpnConnect, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 600, 240, 40));
 
         jpnsoDu2.setBackground(new java.awt.Color(102, 102, 102));
         jpnsoDu2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -285,9 +294,9 @@ public class HomeForm extends javax.swing.JFrame {
                 jlbSoDuMouseClicked(evt);
             }
         });
-        jpnsoDu2.add(jlbSoDu, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 0, -1, -1));
+        jpnsoDu2.add(jlbSoDu, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 0, -1, -1));
 
-        jPanel1.add(jpnsoDu2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 240, 40));
+        jPanel1.add(jpnsoDu2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 240, 40));
 
         jpnbank1.setBackground(new java.awt.Color(102, 102, 102));
         jpnbank1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -301,14 +310,30 @@ public class HomeForm extends javax.swing.JFrame {
                 jlbNapMouseClicked(evt);
             }
         });
-        jpnbank1.add(jlbNap, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 0, -1, -1));
+        jpnbank1.add(jlbNap, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, -1, -1));
 
-        jPanel1.add(jpnbank1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 440, 240, 40));
+        jPanel1.add(jpnbank1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 500, 240, 40));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/user.png"))); // NOI18N
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 260, 600));
+        jpnCheckOut.setBackground(new java.awt.Color(102, 102, 102));
+        jpnCheckOut.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jlbCheckOut.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jlbCheckOut.setForeground(new java.awt.Color(255, 255, 255));
+        jlbCheckOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/check-out.png"))); // NOI18N
+        jlbCheckOut.setText("Thanh Toán");
+        jlbCheckOut.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlbCheckOutMouseClicked(evt);
+            }
+        });
+        jpnCheckOut.add(jlbCheckOut, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, -1, -1));
+
+        jPanel1.add(jpnCheckOut, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 240, 40));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 260, 650));
 
         jPanel2.setBackground(new java.awt.Color(51, 204, 255));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -490,6 +515,43 @@ public class HomeForm extends javax.swing.JFrame {
 
         jPanel3.add(jpnSoDu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 720, 490));
 
+        jpnCHECKOUT.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel26.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel26.setText("THANH TOÁN");
+        jpnCHECKOUT.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 140, -1, -1));
+
+        jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel27.setText("Nhập số tiền cần thanh toán :");
+        jpnCHECKOUT.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 280, 60));
+
+        jTextField11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jpnCHECKOUT.add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 210, 370, 70));
+
+        btnThoat1.setBackground(new java.awt.Color(255, 102, 102));
+        btnThoat1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnThoat1.setText("Thoát");
+        btnThoat1.setActionCommand("Xác Nhận");
+        btnThoat1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoat1ActionPerformed(evt);
+            }
+        });
+        jpnCHECKOUT.add(btnThoat1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 340, 120, 40));
+
+        btnCheckOut.setBackground(new java.awt.Color(255, 102, 102));
+        btnCheckOut.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnCheckOut.setText("Thanh Toán");
+        btnCheckOut.setActionCommand("Xác Nhận");
+        btnCheckOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCheckOutActionPerformed(evt);
+            }
+        });
+        jpnCHECKOUT.add(btnCheckOut, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 340, 140, 40));
+
+        jPanel3.add(jpnCHECKOUT, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 720, 490));
+
         jpnHISTORY.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -580,6 +642,7 @@ public class HomeForm extends javax.swing.JFrame {
        jpnSoDu.setVisible(false);
        jpnHISTORY.setVisible(false);
        jpnNapTien.setVisible(false);
+       jpnCHECKOUT.setVisible(false);
     }//GEN-LAST:event_jlbINFOMouseClicked
 
     private void jlbPINMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbPINMouseClicked
@@ -588,6 +651,7 @@ public class HomeForm extends javax.swing.JFrame {
        jpnSoDu.setVisible(false);
        jpnHISTORY.setVisible(false);
        jpnNapTien.setVisible(false);
+       jpnCHECKOUT.setVisible(false);
     }//GEN-LAST:event_jlbPINMouseClicked
 
     private void jlbSoDuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbSoDuMouseClicked
@@ -596,6 +660,7 @@ public class HomeForm extends javax.swing.JFrame {
        jpnSoDu.setVisible(true);
        jpnHISTORY.setVisible(false);
        jpnNapTien.setVisible(false);
+       jpnCHECKOUT.setVisible(false);
     }//GEN-LAST:event_jlbSoDuMouseClicked
 
     private void jlbHisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbHisMouseClicked
@@ -604,6 +669,7 @@ public class HomeForm extends javax.swing.JFrame {
        jpnSoDu.setVisible(false);
        jpnHISTORY.setVisible(true);
        jpnNapTien.setVisible(false);
+       jpnCHECKOUT.setVisible(false);
     }//GEN-LAST:event_jlbHisMouseClicked
 
     private void jlbNapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbNapMouseClicked
@@ -612,6 +678,7 @@ public class HomeForm extends javax.swing.JFrame {
        jpnSoDu.setVisible(false);
        jpnHISTORY.setVisible(false);
        jpnNapTien.setVisible(true);
+       jpnCHECKOUT.setVisible(false);
     }//GEN-LAST:event_jlbNapMouseClicked
 
     private void jlbConnectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbConnectMouseClicked
@@ -648,6 +715,7 @@ public class HomeForm extends javax.swing.JFrame {
        jpnSoDu.setVisible(false);
        jpnHISTORY.setVisible(false);
        jpnNapTien.setVisible(false);
+       jpnCHECKOUT.setVisible(false);
     }//GEN-LAST:event_btnCanPINActionPerformed
 
     // Edit button event
@@ -679,6 +747,7 @@ public class HomeForm extends javax.swing.JFrame {
        jpnSoDu.setVisible(false);
        jpnHISTORY.setVisible(false);
        jpnNapTien.setVisible(true);
+       jpnCHECKOUT.setVisible(false);
     }//GEN-LAST:event_btnNapThem1ActionPerformed
 
     private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
@@ -702,6 +771,29 @@ public class HomeForm extends javax.swing.JFrame {
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void btnThoat1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoat1ActionPerformed
+        jpnINFO.setVisible(true);
+        jpnPIN.setVisible(false);
+        jpnCHECKOUT.setVisible(false);
+        jpnSoDu.setVisible(false);
+        jpnHISTORY.setVisible(false);
+        jpnNapTien.setVisible(false); // TODO add your handling code here:
+    }//GEN-LAST:event_btnThoat1ActionPerformed
+
+    private void btnCheckOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckOutActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCheckOutActionPerformed
+
+    private void jlbCheckOutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbCheckOutMouseClicked
+        jpnINFO.setVisible(false);
+        jpnPIN.setVisible(false);
+        jpnCHECKOUT.setVisible(true);
+        jpnSoDu.setVisible(false);
+        jpnHISTORY.setVisible(false);
+        jpnNapTien.setVisible(false);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jlbCheckOutMouseClicked
 
     
     /**
@@ -750,11 +842,13 @@ public class HomeForm extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCanPIN;
+    private javax.swing.JButton btnCheckOut;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnHuy;
     private javax.swing.JButton btnNapThem1;
     private javax.swing.JButton btnNapTien;
     private javax.swing.JButton btnThoat;
+    private javax.swing.JButton btnThoat1;
     private javax.swing.JButton btnUP;
     private javax.swing.JButton btnup1;
     private javax.swing.JButton btnupPIN;
@@ -775,6 +869,8 @@ public class HomeForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel8;
@@ -784,6 +880,7 @@ public class HomeForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField10;
+    private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
@@ -793,12 +890,15 @@ public class HomeForm extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
     private javax.swing.JLabel jlbCancel;
+    private javax.swing.JLabel jlbCheckOut;
     private javax.swing.JLabel jlbConnect;
     private javax.swing.JLabel jlbHis;
     private javax.swing.JLabel jlbINFO;
     private javax.swing.JLabel jlbNap;
     private javax.swing.JLabel jlbPIN;
     private javax.swing.JLabel jlbSoDu;
+    private javax.swing.JPanel jpnCHECKOUT;
+    private javax.swing.JPanel jpnCheckOut;
     private javax.swing.JPanel jpnConnect;
     private javax.swing.JPanel jpnHISTORY;
     private javax.swing.JPanel jpnINFO;
