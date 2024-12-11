@@ -11,12 +11,14 @@ import javax.swing.JOptionPane;
  * @author Admin
  */
 public class DoiMaPinForm extends javax.swing.JFrame {
-
+    
+    ConnectJavaCard connect = new ConnectJavaCard();
     /**
      * Creates new form DoiMaPinForm
      */
     public DoiMaPinForm() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -142,9 +144,9 @@ public class DoiMaPinForm extends javax.swing.JFrame {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
-   String txtSave = txtNewPin.getText();
+        String txtSave = txtNewPin.getText();
         String txtXacnhan = txtConfirmPin.getText();
-        ConnectJavaCard connect = new ConnectJavaCard();
+        // ConnectJavaCard connect = new ConnectJavaCard();
         
         if(txtSave.equals(txtXacnhan) && !txtSave.equals("Botcard")){
             if(connect.createPIN(txtSave)){

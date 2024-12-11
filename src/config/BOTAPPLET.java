@@ -34,7 +34,6 @@ public class BOTAPPLET {
     public final static byte P1_OUT_NUMBER_PLATE= (byte)0x04;
     
     public final static byte INS_CREATE_IMAGE = (byte)0x53;
-    public final static byte INS_CREATE_SIZEIMAGE = (byte)0x54;//countanh
-    public final static byte INS_OUT_SIZEIMAGE = (byte)0x55;
-    public final static byte INS_OUT_IMAGE = (byte)0x56;
+    public final static byte INS_OUT_IMAGE = (byte)0x55;
+    public final static byte INS_GET_IMAGE_SIZE = (byte) 0x54;
 }

@@ -4,16 +4,33 @@
  */
 package bot_card;
 
+import java.awt.Graphics2D;
 import java.awt.HeadlessException;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import javax.imageio.ImageIO;
+import javax.smartcardio.CardException;
 import javax.smartcardio.CommandAPDU;
 import javax.smartcardio.ResponseAPDU;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -21,6 +38,7 @@ import javax.swing.JTextField;
  */
 public class HomeForm extends javax.swing.JFrame {
 
+    private final ConnectJavaCard card = new ConnectJavaCard();
     /**
      * Creates new form HomeForm
      */
@@ -38,14 +56,32 @@ public class HomeForm extends javax.swing.JFrame {
        jTextField7.setEnabled(false);
        jTextField8.setEnabled(false);
        
-       // Field 6 - name
-       jTextField6.setText(getDataString(config.BOTAPPLET.P1_OUT_NAME));
-       // Field 7 - dob
-       jTextField7.setText(getDataString(config.BOTAPPLET.P1_OUT_DOB));
-       // Field 8 - address
-       jTextField8.setText(getDataString(config.BOTAPPLET.P1_OUT_ADDRESS));
-       // Field 5 - Number plate
-       jTextField5.setText(getDataString(config.BOTAPPLET.P1_OUT_NUMBER_PLATE));
+        if (card.checkStatus()) {
+            // Field 6 - name
+            jTextField6.setText(getDataString(config.BOTAPPLET.P1_OUT_NAME));
+            // Field 7 - dob
+            jTextField7.setText(getDataString(config.BOTAPPLET.P1_OUT_DOB));
+            // Field 8 - address
+            jTextField8.setText(getDataString(config.BOTAPPLET.P1_OUT_ADDRESS));
+            // Field 5 - Number plate
+            jTextField5.setText(getDataString(config.BOTAPPLET.P1_OUT_NUMBER_PLATE));
+            
+            /*
+            // Image
+            try {
+                card.image = card.retrieveImage();
+            juploadpt1.setIcon(
+                    new ImageIcon(card.image)
+            );
+            System.out.println("Relieve image success");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            */
+            
+        }
+        System.out.println("Chua set data -> card");
+
        
     }
 
@@ -617,7 +653,6 @@ public class HomeForm extends javax.swing.JFrame {
 
     private String getDataString(byte p1) {
         
-        ConnectJavaCard card = new ConnectJavaCard();
         String kq = "";
         try {
             ResponseAPDU respond = card.sendRequest(
@@ -635,7 +670,23 @@ public class HomeForm extends javax.swing.JFrame {
         }
         return kq;
     }
+
+    private byte[] selectImage() {
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setFileFilter(new FileNameExtensionFilter("Image Files", "jpg", "png", "jpeg", "bmp"));
+    int result = fileChooser.showOpenDialog(this);
     
+    if (result == JFileChooser.APPROVE_OPTION) {
+        try {
+            File file = fileChooser.getSelectedFile();
+            return Files.readAllBytes(file.toPath()); // Đọc ảnh thành byte array
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error reading image: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    return null;
+}
+
     private void jlbINFOMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbINFOMouseClicked
        jpnINFO.setVisible(true);
        jpnPIN.setVisible(false);
@@ -694,8 +745,10 @@ public class HomeForm extends javax.swing.JFrame {
         String cofirmPin = jTextField3.getText();
         
         if(newPin.equals(cofirmPin) && !newPin.equals(oldPin)){
-            ConnectJavaCard connect = new ConnectJavaCard();
-            if(connect.ChangePIN(oldPin, newPin)){
+            
+            // Previous code
+            // ConnectJavaCard connect = new ConnectJavaCard();
+            if(card.ChangePIN(oldPin, newPin)){
                 System.out.println("Đổi mã PIN thành công!");
                 new loginForm().setVisible(true);
             }
@@ -721,19 +774,91 @@ public class HomeForm extends javax.swing.JFrame {
     // Edit button event
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
-        System.out.println("Edit button clicked");
+       // SetEnable = true
+       System.out.println("Edit button clicked");
        jTextField5.setEnabled(true);
        jTextField6.setEnabled(true);
        jTextField7.setEnabled(true);
        jTextField8.setEnabled(true);
+       
     }//GEN-LAST:event_btnEditActionPerformed
-
+    
+    // Update button
     private void btnUPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUPActionPerformed
         // TODO add your handling code here:
+        // Send commandAPDU to Card _ INS_SET
+        
+        card.strName = jTextField6.getText();
+        card.strAddress = jTextField8.getText();
+        card.strDate = jTextField7.getText();
+        card.strNumberPlate = jTextField5.getText();
+        
+        // Get string data
+        String dataSend = String.join(",", card.strName, card.strDate, card.strAddress, card.strNumberPlate);
+        card.data = dataSend.getBytes(StandardCharsets.UTF_8);
+       
+        // Send request
+        ResponseAPDU respond;
+        respond = card.sendRequest(
+                new CommandAPDU(0x00,config.BOTAPPLET.INS_SET_DATA,0x00,0x00,card.data)
+        );
+        System.out.println(respond.toString());
+        String result = Integer.toHexString(respond.getSW());
+        if(result.equals("9000")) {
+            System.out.println("Send data to card success");
+            JOptionPane.showMessageDialog(this, "Cap nhat du lieu thanh cong.");
+        } else {
+            System.out.println("Error command APDU");
+        }
+        
+        // Set editable = false
+        jTextField5.setEnabled(false);
+        jTextField6.setEnabled(false);
+        jTextField7.setEnabled(false);
+        jTextField8.setEnabled(false);
+        
+        card.isSetData = true;
+        
     }//GEN-LAST:event_btnUPActionPerformed
-
+    
+    // Button select image
     private void btnup1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnup1ActionPerformed
         // TODO add your handling code here:
+        byte[] originalImageBytes  = selectImage();
+        if (originalImageBytes  != null) {
+            JOptionPane.showMessageDialog(this, "Image selected successfully!");
+             // Get image
+            List<byte[]> chunks = splitByteArray(originalImageBytes, 243);
+
+            try {
+                card.sendChunks(chunks);
+                JOptionPane.showMessageDialog(this, "Send image to card success");
+            } catch (CardException e) {
+                JOptionPane.showMessageDialog(this, "Send image to card err: "+ e.getMessage());
+            }
+        }
+        
+        ImageIcon imageIcon = new ImageIcon(originalImageBytes );
+        
+        // Kich thuoc o juploadpt1
+        int width = juploadpt1.getWidth();
+        int height = juploadpt1.getHeight();
+        
+        //Scale image
+        Image scaledImage;
+        scaledImage = imageIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        juploadpt1.setIcon(new ImageIcon(scaledImage));
+        
+        // Chuyển ảnh đã scale thành byte[]
+        try {
+            byte[] scaledImageBytes = imageToByteArray(scaledImage, "png");
+            // Sout mảng byte
+            System.out.println("Scaled Image Bytes: " + bytesToHex(scaledImageBytes));
+            System.out.println(scaledImageBytes.length);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error converting image to bytes: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }//GEN-LAST:event_btnup1ActionPerformed
 
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
@@ -759,7 +884,7 @@ public class HomeForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNapTienActionPerformed
 
     private void jlbCancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbCancelMouseClicked
-        // TODO add your handling code here:
+        // TODO add your han nedxw4  dling code here:
         this.dispose();
     }//GEN-LAST:event_jlbCancelMouseClicked
     
@@ -825,13 +950,49 @@ public class HomeForm extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new HomeForm().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new HomeForm().setVisible(true);
         });
     }
+    
+    
+    private List<byte[]> splitByteArray(byte[] data, int chunkSize) {
+        List<byte[]> chunks = new ArrayList<>();
+        int start = 0;
+        while (start < data.length) {
+            int end = Math.min(data.length, start + chunkSize);
+            chunks.add(Arrays.copyOfRange(data, start, end));
+            start += chunkSize;
+        }
+        return chunks;
+    }
+    
+    private byte[] imageToByteArray(Image image, String format) throws IOException {
+        BufferedImage bufferedImage = new BufferedImage(
+            image.getWidth(null),
+            image.getHeight(null),
+            BufferedImage.TYPE_INT_ARGB
+        );
+
+        // Vẽ ảnh vào BufferedImage
+        Graphics2D g2d = bufferedImage.createGraphics();
+        g2d.drawImage(image, 0, 0, null);
+        g2d.dispose();
+
+        // Chuyển BufferedImage thành byte[]
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(bufferedImage, format, baos);
+        return baos.toByteArray();
+    }
+    
+    private String bytesToHex(byte[] bytes) {
+        StringBuilder hexString = new StringBuilder();
+        for (byte b : bytes) {
+            hexString.append(String.format("%02X ", b));
+        }
+        return hexString.toString().trim();
+    }
+
 
     public static String hexToString(byte[] bytes) {
         StringBuilder sb = new StringBuilder();

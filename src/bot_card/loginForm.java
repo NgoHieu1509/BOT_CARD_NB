@@ -11,7 +11,8 @@ import javax.swing.JOptionPane;
  * @author Admin
  */
 public class loginForm extends javax.swing.JFrame {
-
+    
+    ConnectJavaCard connect = new ConnectJavaCard();
     /**
      * Creates new form loginForm
      */
@@ -197,7 +198,7 @@ public class loginForm extends javax.swing.JFrame {
 
     private void btnConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConnectActionPerformed
         // TODO add your handling code here:
-         ConnectJavaCard connect = new ConnectJavaCard();
+        // ConnectJavaCard connect = new ConnectJavaCard();
         connect.connectapplet();
         String response = connect.connectapplet();
         if (response.equals("Error")) {
@@ -219,8 +220,8 @@ public class loginForm extends javax.swing.JFrame {
 
     private void btnLoginUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginUserActionPerformed
         // TODO add your handling code here:
-          String pin = txtmapin.getText();
-        ConnectJavaCard connect = new ConnectJavaCard();
+        String pin = txtmapin.getText();
+        // ConnectJavaCard connect = new ConnectJavaCard();
         
         if (connect.verifyPin(pin)) {
             if (firstUSE == 1) {
