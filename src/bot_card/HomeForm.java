@@ -38,6 +38,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class HomeForm extends javax.swing.JFrame {
 
+    private final ConnectJavaCard card = new ConnectJavaCard();
     /**
      * Creates new form HomeForm
      */
@@ -54,7 +55,6 @@ public class HomeForm extends javax.swing.JFrame {
        jTextField7.setEnabled(false);
        jTextField8.setEnabled(false);
        
-        ConnectJavaCard card = new ConnectJavaCard();
         if (card.checkStatus()) {
             // Field 6 - name
             jTextField6.setText(getDataString(config.BOTAPPLET.P1_OUT_NAME));
@@ -591,7 +591,6 @@ public class HomeForm extends javax.swing.JFrame {
 
     private String getDataString(byte p1) {
         
-        ConnectJavaCard card = new ConnectJavaCard();
         String kq = "";
         try {
             ResponseAPDU respond = card.sendRequest(
@@ -679,8 +678,10 @@ public class HomeForm extends javax.swing.JFrame {
         String cofirmPin = jTextField3.getText();
         
         if(newPin.equals(cofirmPin) && !newPin.equals(oldPin)){
-            ConnectJavaCard connect = new ConnectJavaCard();
-            if(connect.ChangePIN(oldPin, newPin)){
+            
+            // Previous code
+            // ConnectJavaCard connect = new ConnectJavaCard();
+            if(card.ChangePIN(oldPin, newPin)){
                 System.out.println("Đổi mã PIN thành công!");
                 new loginForm().setVisible(true);
             }
@@ -718,7 +719,6 @@ public class HomeForm extends javax.swing.JFrame {
     private void btnUPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUPActionPerformed
         // TODO add your handling code here:
         // Send commandAPDU to Card _ INS_SET
-        ConnectJavaCard card = new ConnectJavaCard();
         
         card.strName = jTextField6.getText();
         card.strAddress = jTextField8.getText();
@@ -756,7 +756,6 @@ public class HomeForm extends javax.swing.JFrame {
     // Button select image
     private void btnup1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnup1ActionPerformed
         // TODO add your handling code here:
-        ConnectJavaCard card = new ConnectJavaCard();
         byte[] originalImageBytes  = selectImage();
         if (originalImageBytes  != null) {
             JOptionPane.showMessageDialog(this, "Image selected successfully!");

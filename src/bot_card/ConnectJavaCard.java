@@ -19,6 +19,8 @@ import javax.swing.JOptionPane;
  * @author Admin
  */
 public class ConnectJavaCard {
+    
+    // Properties
     byte [] data;
     byte[] image;
     public String strID;
@@ -29,21 +31,28 @@ public class ConnectJavaCard {
     public String message;
     public boolean isSetup = false;
     public boolean isSetData = false;
+    
+    // Khai bao doi tuong ket noi applet
+    TerminalFactory factory;
+    List<CardTerminal> terminals;
+    CardTerminal terminal;
+    Card card;
+    CardChannel channel;
   public String connectapplet() {
       String kq="";
   try {
    // Display the list of terminals
-   TerminalFactory factory = TerminalFactory.getDefault();
-   List<CardTerminal> terminals = factory.terminals().list();
+   factory = TerminalFactory.getDefault();
+   terminals = factory.terminals().list();
    System.out.println("Terminals: " + terminals);
 
    // Use the first terminal
-   CardTerminal terminal = terminals.get(0);
+   terminal = terminals.get(0);
 
    // Connect wit hthe card
-   Card card = terminal.connect("*");
+   card = terminal.connect("*");
    System.out.println("card: " + card);
-   CardChannel channel = card.getBasicChannel();
+   channel = card.getBasicChannel();
 
    // Send Select Applet command
    byte[] aid = {(byte) 0x11,0x22,0x33,0x44,0x55,0x01};
@@ -60,17 +69,17 @@ public class ConnectJavaCard {
   
 public boolean disconnectCard(){
     try {
-         TerminalFactory factory = TerminalFactory.getDefault();
-        List<CardTerminal> terminals = factory.terminals().list();
+        factory = TerminalFactory.getDefault();
+        terminals = factory.terminals().list();
         System.out.println("Terminals: " + terminals);
 
    // Use the first terminal
-         CardTerminal terminal = terminals.get(0);
+        terminal = terminals.get(0);
 
    // Connect wit hthe card
-         Card card = terminal.connect("*");
-         card.disconnect(true);
-         return true;
+        card = terminal.connect("*");
+        card.disconnect(true);
+        return true;
     } catch (CardException e) {
         System.out.println("ERROR::::::::"+e);
     }
@@ -80,15 +89,14 @@ public boolean disconnectCard(){
    public void setUp(){
         
         try{
+            factory = TerminalFactory.getDefault();
+            terminals = factory.terminals().list();
             
-            TerminalFactory factory = TerminalFactory.getDefault();
-            List<CardTerminal> terminals = factory.terminals().list();
+            terminal = terminals.get(0);
             
-            CardTerminal terminal = terminals.get(0);
+            card = terminal.connect("*");
             
-            Card card = terminal.connect("*");
-            
-            CardChannel channel = card.getBasicChannel();
+            channel = card.getBasicChannel();
             
             ResponseAPDU answer = channel.transmit(new CommandAPDU(0xB0,config.BOTAPPLET.INS_SETUP,0x00,0x00));
             
@@ -112,14 +120,14 @@ public boolean createPIN(String pin){
         }
         try{
             
-            TerminalFactory factory = TerminalFactory.getDefault();
-            List<CardTerminal> terminals = factory.terminals().list();
+            factory = TerminalFactory.getDefault();
+            terminals = factory.terminals().list();
             
-            CardTerminal terminal = terminals.get(0);
+            terminal = terminals.get(0);
             
-            Card card = terminal.connect("*");
+            card = terminal.connect("*");
             
-            CardChannel channel = card.getBasicChannel();
+            channel = card.getBasicChannel();
             
             ResponseAPDU answer = channel.transmit(new CommandAPDU(0xA0,config.BOTAPPLET.INS_CREATE_PIN,0x00,0x03,send));
             
@@ -147,14 +155,14 @@ public boolean createPIN(String pin){
         byte[] pinbyte =  pin.getBytes();
         try{
             
-            TerminalFactory factory = TerminalFactory.getDefault();
-            List<CardTerminal> terminals = factory.terminals().list();
+            factory = TerminalFactory.getDefault();
+            terminals = factory.terminals().list();
             
-            CardTerminal terminal = terminals.get(0);
+            terminal = terminals.get(0);
             
-            Card card = terminal.connect("*");
+            card = terminal.connect("*");
             
-            CardChannel channel = card.getBasicChannel();
+            channel = card.getBasicChannel();
             
             ResponseAPDU answer = channel.transmit(new CommandAPDU(0xA0,config.BOTAPPLET.INS_VERIFY_PIN,0x00,0x00,pinbyte));
             message = Integer.toHexString(answer.getSW());
@@ -199,14 +207,14 @@ public boolean createPIN(String pin){
         System.arraycopy(newPinByte, 0, send, offSet, newPinLen);
         try{
             
-            TerminalFactory factory = TerminalFactory.getDefault();
-            List<CardTerminal> terminals = factory.terminals().list();
+            factory = TerminalFactory.getDefault();
+            terminals = factory.terminals().list();
             
-            CardTerminal terminal = terminals.get(0);
+            terminal = terminals.get(0);
             
-            Card card = terminal.connect("*");
+            card = terminal.connect("*");
             
-            CardChannel channel = card.getBasicChannel();
+            channel = card.getBasicChannel();
             
             ResponseAPDU answer = channel.transmit(new CommandAPDU(0xA0,config.BOTAPPLET.INS_CHANGE_PIN,0x00,0x00,send));
             
@@ -233,14 +241,14 @@ public boolean createPIN(String pin){
   public boolean UnblockPin(byte [] aid){
         try{
             
-            TerminalFactory factory = TerminalFactory.getDefault();
-            List<CardTerminal> terminals = factory.terminals().list();
+            factory = TerminalFactory.getDefault();
+            terminals = factory.terminals().list();
             
-            CardTerminal terminal = terminals.get(0);
+            terminal = terminals.get(0);
             
-            Card card = terminal.connect("*");
+            card = terminal.connect("*");
             
-            CardChannel channel = card.getBasicChannel();
+            channel = card.getBasicChannel();
             
             ResponseAPDU selectBlockcard = channel.transmit(new CommandAPDU(0x00,0xA4,0x00,0x00,aid));
             
@@ -285,11 +293,11 @@ public boolean createPIN(String pin){
             }
             
             try {
-                TerminalFactory factory = TerminalFactory.getDefault();
-                List<CardTerminal> terminals = factory.terminals().list();
-                CardTerminal terminal = terminals.get(0);
-                Card card = terminal.connect("*");
-                CardChannel channel = card.getBasicChannel();
+                factory = TerminalFactory.getDefault();
+                terminals = factory.terminals().list();
+                terminal = terminals.get(0);
+                card = terminal.connect("*");
+                channel = card.getBasicChannel();
 
                 respond = channel.transmit(commandAPDU);
                 return respond;
@@ -333,11 +341,11 @@ public boolean createPIN(String pin){
             }
             
             try {
-                TerminalFactory factory = TerminalFactory.getDefault();
-                List<CardTerminal> terminals = factory.terminals().list();
-                CardTerminal terminal = terminals.get(0);
-                Card card = terminal.connect("*");
-                CardChannel channel = card.getBasicChannel();
+                factory = TerminalFactory.getDefault();
+                terminals = factory.terminals().list();
+                terminal = terminals.get(0);
+                card = terminal.connect("*");
+                channel = card.getBasicChannel();
         
                 for (byte[] chunk : chunks) {
                     CommandAPDU commandAPDU = new CommandAPDU(0x00, config.BOTAPPLET.INS_CREATE_IMAGE, 0x00, 0x00, chunk);
@@ -352,53 +360,4 @@ public boolean createPIN(String pin){
         }
     }
     
-    public byte[] retrieveImage() throws CardException {
-
-        String kq = connectapplet();
-        if(!kq.contains("SW=9000")) {
-            System.out.println("Connection error");
-        } else {
-            System.out.println("Connect to card");
-            if (!isSetup) {
-                System.out.println("You need run set up");
-                setUp();
-                System.out.println("Set up done!");
-            }
-            
-                TerminalFactory factory = TerminalFactory.getDefault();
-                List<CardTerminal> terminals = factory.terminals().list();
-                CardTerminal terminal = terminals.get(0);
-                Card card = terminal.connect("*");
-                CardChannel channel = card.getBasicChannel();
-
-                short totalLen = 16384;
-                byte[] imageData = new byte[totalLen]; // 16 KB
-                short offset = 0;
-                short chunkSize = 243;
-                short bytesRead = 0;
-                while (offset < totalLen) {
-                    short remaining = (short) (totalLen - offset);
-                    short currentChunkSize = (short) Math.min(chunkSize, remaining);
-                    CommandAPDU commandAPDU = new CommandAPDU(0x00, config.BOTAPPLET.INS_OUT_IMAGE, (byte) (offset >> 8), (byte) offset, currentChunkSize);
-                    ResponseAPDU responseAPDU = channel.transmit(commandAPDU);
-                    if (responseAPDU.getSW() != 0x9000) {
-                        throw new CardException("Error retrieving chunk: " + Integer.toHexString(responseAPDU.getSW()));
-                    }
-                    byte[] chunk = responseAPDU.getData();
-                    if (chunk == null) { throw new CardException("Received null chunk from smart card"); }
-                    System.arraycopy(chunk, 0, imageData, offset, chunk.length);
-                    offset += chunk.length;
-                    bytesRead += chunk.length;
-                    
-                    if (chunk.length < chunkSize) {
-                        break;
-                    }
-                }
-                // Tạo mảng mới với kích thước chính xác của dữ liệu đã nhận
-                byte[] actualImageData = new byte[bytesRead]; 
-                System.arraycopy(imageData, 0, actualImageData, 0, bytesRead); 
-                return actualImageData;
-        }
-        return null;
-    }
 }
