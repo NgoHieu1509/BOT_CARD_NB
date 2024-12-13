@@ -28,10 +28,11 @@ public class BOTAPPLET {
     
     public final static byte INS_SET_DATA = (byte)0x01;
     public final static byte INS_GET_DATA = (byte)0x02;
-    public final static byte P1_OUT_NAME = (byte)0x01;
-    public final static byte P1_OUT_DOB = (byte)0x02;
-    public final static byte P1_OUT_ADDRESS = (byte)0x03;
-    public final static byte P1_OUT_NUMBER_PLATE= (byte)0x04;
+    public final static byte P1_OUT_ID = (byte)0x01;
+    public final static byte P1_OUT_NAME = (byte)0x02;
+    public final static byte P1_OUT_DOB = (byte)0x03;
+    public final static byte P1_OUT_ADDRESS = (byte)0x04;
+    public final static byte P1_OUT_NUMBER_PLATE= (byte)0x05;
     
     public final static byte INS_CREATE_IMAGE = (byte)0x53;
     public final static byte INS_OUT_IMAGE = (byte)0x55;
