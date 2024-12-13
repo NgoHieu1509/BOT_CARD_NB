@@ -665,9 +665,8 @@ public class HomeForm extends javax.swing.JFrame {
         jpnSoDu.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
         jlbMone.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
-        jlbMone.setText("100.000.000");
         jlbMone.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jpnSoDu.add(jlbMone, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 200, 230, 60));
+        jpnSoDu.add(jlbMone, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 200, 250, 60));
 
         jLabel36.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
         jLabel36.setText("VNĐ");
@@ -687,7 +686,7 @@ public class HomeForm extends javax.swing.JFrame {
         jpnNapTien.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 220, 230, 50));
 
         jTextField10.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
-        jpnNapTien.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 270, 350, 60));
+        jpnNapTien.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 270, 230, 60));
 
         btnHuy.setBackground(new java.awt.Color(255, 102, 102));
         btnHuy.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -726,8 +725,8 @@ public class HomeForm extends javax.swing.JFrame {
         jpnNapTien.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 130, -1, -1));
 
         jLabel37.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
-        jLabel37.setText("0.000 VNĐ");
-        jpnNapTien.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 280, -1, -1));
+        jLabel37.setText(".000 VNĐ");
+        jpnNapTien.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 280, -1, -1));
 
         jPanel3.add(jpnNapTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 740, 540));
 
@@ -819,6 +818,7 @@ public class HomeForm extends javax.swing.JFrame {
        jpnINFO.setVisible(false);
        jpnPIN.setVisible(false);
        jpnSoDu.setVisible(true);
+       jlbMone.setText("0");
        jpnHISTORY.setVisible(false);
        jpnNapTien.setVisible(false);
        jpnCHECKOUT.setVisible(false);
