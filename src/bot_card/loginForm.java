@@ -232,6 +232,7 @@ public class loginForm extends javax.swing.JFrame {
                 this.dispose();
                 
             } else {
+                
                 HomeForm home = new HomeForm();
                 home.setVisible(true);
                 this.dispose();

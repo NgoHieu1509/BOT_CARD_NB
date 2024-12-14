@@ -28,13 +28,20 @@ public class BOTAPPLET {
     
     public final static byte INS_SET_DATA = (byte)0x01;
     public final static byte INS_GET_DATA = (byte)0x02;
-    public final static byte P1_OUT_ID = (byte)0x01;
-    public final static byte P1_OUT_NAME = (byte)0x02;
-    public final static byte P1_OUT_DOB = (byte)0x03;
-    public final static byte P1_OUT_ADDRESS = (byte)0x04;
-    public final static byte P1_OUT_NUMBER_PLATE= (byte)0x05;
+    public final static byte P1_OUT_ID = (byte)0x05;
+    public final static byte P1_OUT_NAME = (byte)0x01;
+    public final static byte P1_OUT_DOB = (byte)0x02;
+    public final static byte P1_OUT_ADDRESS = (byte)0x03;
+    public final static byte P1_OUT_NUMBER_PLATE= (byte)0x04;
     
+       /*
     public final static byte INS_CREATE_IMAGE = (byte)0x53;
     public final static byte INS_OUT_IMAGE = (byte)0x55;
     public final static byte INS_GET_IMAGE_SIZE = (byte) 0x54;
+    */
+    
+    // INS - Image - using Extended APDU
+    public final static byte INS_SEND_IMAGE = 0x10;	// App -> Card
+    public final static byte INS_GET_IMAGE = 0x11; 	// Card -> App
+    public final static byte INS_CHECK = 0x12; 	// Kiem tra da set up chua
 }
