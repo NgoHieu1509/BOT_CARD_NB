@@ -55,8 +55,11 @@ public class HomeForm extends javax.swing.JFrame {
        jTextField6.setEnabled(false);
        jTextField7.setEnabled(false);
        jTextField8.setEnabled(false);
+       jTextField12.setEnabled(false);
        
         if (card.checkStatus()) {
+             // Field 12 - id
+            jTextField12.setText(getDataString(config.BOTAPPLET.P1_OUT_ID));
             // Field 6 - name
             jTextField6.setText(getDataString(config.BOTAPPLET.P1_OUT_NAME));
             // Field 7 - dob
@@ -85,10 +88,10 @@ public class HomeForm extends javax.swing.JFrame {
        
     }
 
-    public HomeForm(JButton btnCanPIN, JButton btnEdit, JButton btnHuy, JButton btnNapThem1, JButton btnNapTien, JButton btnThoat, JButton btnUP, JButton btnup1, JButton btnupPIN, JLabel jLabel1, JLabel jLabel10, JLabel jLabel12, JLabel jLabel13, JLabel jLabel14, JLabel jLabel15, JLabel jLabel16, JLabel jLabel17, JLabel jLabel18, JLabel jLabel19, JLabel jLabel2, JLabel jLabel20, JLabel jLabel21, JLabel jLabel22, JLabel jLabel23, JLabel jLabel24, JLabel jLabel25, JLabel jLabel3, JLabel jLabel4, JLabel jLabel8, JPanel jPanel1, JPanel jPanel2, JPanel jPanel3, JScrollPane jScrollPane1, JTable jTable1, JTextField jTextField10, JTextField jTextField2, JTextField jTextField3, JTextField jTextField4, JTextField jTextField5, JTextField jTextField6, JTextField jTextField7, JTextField jTextField8, JTextField jTextField9, JLabel jlbCancel, JLabel jlbConnect, JLabel jlbHis, JLabel jlbINFO, JLabel jlbNap, JLabel jlbPIN, JLabel jlbSoDu, JPanel jpnConnect, JPanel jpnHISTORY, JPanel jpnINFO, JPanel jpnNapTien, JPanel jpnPIN, JPanel jpnSoDu, JPanel jpnbank1, JPanel jpnhis, JPanel jpnif2, JPanel jpnpin, JPanel jpnsoDu2, JLabel juploadpt1) throws HeadlessException {
+    public HomeForm(JButton btnCanPIN, JButton btnHuy, JButton btnNapThem1, JButton btnNapTien, JButton btnThoat, JButton btnUP, JButton btnup1, JButton btnupPIN, JLabel jLabel1, JLabel jLabel10, JLabel jLabel12, JLabel jLabel13, JLabel jLabel14, JLabel jLabel15, JLabel jLabel16, JLabel jLabel17, JLabel jLabel18, JLabel jLabel19, JLabel jLabel2, JLabel jLabel20, JLabel jLabel21, JLabel jLabel22, JLabel jLabel23, JLabel jLabel24, JLabel jLabel25, JLabel jLabel3, JLabel jLabel4, JLabel jLabel8, JPanel jPanel1, JPanel jPanel2, JPanel jPanel3, JScrollPane jScrollPane1, JTable jTable1, JTextField jTextField10, JTextField jTextField2, JTextField jTextField3, JTextField jTextField4, JTextField jTextField5, JTextField jTextField6, JTextField jTextField7, JTextField jTextField8, JLabel jlbCancel, JLabel jlbConnect, JLabel jlbHis, JLabel jlbINFO, JLabel jlbNap, JLabel jlbPIN, JLabel jlbSoDu, JPanel jpnConnect, JPanel jpnHISTORY, JPanel jpnINFO, JPanel jpnNapTien, JPanel jpnPIN, JPanel jpnSoDu, JPanel jpnbank1, JPanel jpnhis, JPanel jpnif2, JPanel jpnpin, JPanel jpnsoDu2, JLabel juploadpt1) throws HeadlessException {
         this.btnCanPIN = btnCanPIN;
-        this.btnEdit = btnEdit;
         this.btnHuy = btnHuy;
+        
         this.btnNapThem1 = btnNapThem1;
         this.btnNapTien = btnNapTien;
         this.btnThoat = btnThoat;
@@ -128,7 +131,7 @@ public class HomeForm extends javax.swing.JFrame {
         this.jTextField6 = jTextField6;
         this.jTextField7 = jTextField7;
         this.jTextField8 = jTextField8;
-        this.jTextField9 = jTextField9;
+        
         this.jlbCancel = jlbCancel;
         this.jlbConnect = jlbConnect;
         this.jlbHis = jlbHis;
@@ -196,7 +199,10 @@ public class HomeForm extends javax.swing.JFrame {
         jTextField7 = new javax.swing.JTextField();
         jTextField8 = new javax.swing.JTextField();
         btnUP = new javax.swing.JButton();
-        btnEdit = new javax.swing.JButton();
+        jLabel28 = new javax.swing.JLabel();
+        jTextField12 = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jpnPIN = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -207,28 +213,46 @@ public class HomeForm extends javax.swing.JFrame {
         btnupPIN = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
-        jpnSoDu = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
-        btnThoat = new javax.swing.JButton();
-        btnNapThem1 = new javax.swing.JButton();
+        jLabel31 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel32 = new javax.swing.JLabel();
         jpnCHECKOUT = new javax.swing.JPanel();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         jTextField11 = new javax.swing.JTextField();
         btnThoat1 = new javax.swing.JButton();
         btnCheckOut = new javax.swing.JButton();
-        jpnHISTORY = new javax.swing.JPanel();
-        jLabel23 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
+        jpnSoDu = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        btnThoat = new javax.swing.JButton();
+        btnNapThem1 = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel33 = new javax.swing.JLabel();
+        jlbMone = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
         jpnNapTien = new javax.swing.JPanel();
         jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         jTextField10 = new javax.swing.JTextField();
         btnHuy = new javax.swing.JButton();
         btnNapTien = new javax.swing.JButton();
+        jLabel35 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
+        jpnHISTORY = new javax.swing.JPanel();
+        jLabel23 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel30 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -380,7 +404,7 @@ public class HomeForm extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setText("Xin Chào, User");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 30, -1, -1));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 20, -1, -1));
 
         jlbCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/cancel.png"))); // NOI18N
         jlbCancel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -394,12 +418,13 @@ public class HomeForm extends javax.swing.JFrame {
 
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jpnINFO.setBackground(new java.awt.Color(255, 255, 255));
         jpnINFO.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         juploadpt1.setBackground(new java.awt.Color(204, 204, 204));
         juploadpt1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         juploadpt1.setOpaque(true);
-        jpnINFO.add(juploadpt1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 140, 170, 200));
+        jpnINFO.add(juploadpt1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 100, 170, 200));
 
         btnup1.setBackground(new java.awt.Color(51, 204, 255));
         btnup1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -409,37 +434,43 @@ public class HomeForm extends javax.swing.JFrame {
                 btnup1ActionPerformed(evt);
             }
         });
-        jpnINFO.add(btnup1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 360, -1, 40));
+        jpnINFO.add(btnup1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 320, -1, 40));
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jLabel17.setText("THÔNG TIN CÁ NHÂN");
-        jpnINFO.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, -1, -1));
-        jLabel17.getAccessibleContext().setAccessibleName("THÔNG TIN CÁ NHÂN");
+        jpnINFO.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, -1, -1));
 
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel18.setText("Biển số xe : ");
-        jpnINFO.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, -1, -1));
+        jpnINFO.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, -1, -1));
+
+        jTextField5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jpnINFO.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 360, 320, 40));
 
         jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel19.setText("Họ Tên : ");
-        jpnINFO.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
+        jpnINFO.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
 
         jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel20.setText("Năm sinh :");
-        jpnINFO.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
+        jpnINFO.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, -1, -1));
 
         jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel21.setText("Quê Quán :");
         jpnINFO.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, -1, -1));
 
+        jTextField6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jTextField6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField6ActionPerformed(evt);
             }
         });
-        jpnINFO.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 320, 40));
+        jpnINFO.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 320, 40));
+
+        jTextField7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jpnINFO.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 220, 320, 40));
+
+        jTextField8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jpnINFO.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 280, 320, 40));
 
         btnUP.setBackground(new java.awt.Color(255, 102, 102));
@@ -450,42 +481,52 @@ public class HomeForm extends javax.swing.JFrame {
                 btnUPActionPerformed(evt);
             }
         });
-        jpnINFO.add(btnUP, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 440, 120, 40));
+        jpnINFO.add(btnUP, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 430, 150, 40));
 
-        btnEdit.setBackground(new java.awt.Color(255, 102, 102));
-        btnEdit.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnEdit.setText("Sửa");
-        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+        jLabel28.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel28.setText("ID :");
+        jpnINFO.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, -1));
+
+        jTextField12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jTextField12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditActionPerformed(evt);
+                jTextField12ActionPerformed(evt);
             }
         });
-        jpnINFO.add(btnEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 440, 120, 40));
+        jpnINFO.add(jTextField12, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 320, 40));
 
-        jPanel3.add(jpnINFO, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 720, 490));
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/winter.png"))); // NOI18N
+        jpnINFO.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 400, 110, 110));
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/snowball.png"))); // NOI18N
+        jpnINFO.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 420, -1, -1));
+
+        jPanel3.add(jpnINFO, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 740, 540));
         jpnINFO.getAccessibleContext().setAccessibleDescription("");
 
+        jpnPIN.setBackground(new java.awt.Color(255, 255, 255));
         jpnPIN.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel12.setBackground(new java.awt.Color(255, 255, 255));
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel12.setText("THAY ĐỔI MÃ PIN");
-        jpnPIN.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, -1, -1));
+        jpnPIN.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 60, -1, -1));
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel15.setText("Xác nhận mã pin mới:");
-        jpnPIN.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, -1, -1));
+        jpnPIN.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 280, -1, -1));
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel16.setText("Nhập mã pin mới:");
-        jpnPIN.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, -1, -1));
+        jpnPIN.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, -1, -1));
 
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
             }
         });
-        jpnPIN.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 220, 320, 40));
-        jpnPIN.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 150, 320, 40));
+        jpnPIN.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 270, 320, 40));
+        jpnPIN.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 210, 320, 40));
 
         btnCanPIN.setBackground(new java.awt.Color(255, 102, 102));
         btnCanPIN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -495,7 +536,7 @@ public class HomeForm extends javax.swing.JFrame {
                 btnCanPINActionPerformed(evt);
             }
         });
-        jpnPIN.add(btnCanPIN, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 320, 120, 40));
+        jpnPIN.add(btnCanPIN, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 360, 120, 40));
 
         btnupPIN.setBackground(new java.awt.Color(255, 102, 102));
         btnupPIN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -505,64 +546,46 @@ public class HomeForm extends javax.swing.JFrame {
                 btnupPINActionPerformed(evt);
             }
         });
-        jpnPIN.add(btnupPIN, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 320, 120, 40));
+        jpnPIN.add(btnupPIN, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 360, 120, 40));
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel14.setText("Mã pin cũ :");
-        jpnPIN.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 100, -1));
-        jpnPIN.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 320, 40));
+        jpnPIN.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 100, -1));
+        jpnPIN.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 150, 320, 40));
 
-        jPanel3.add(jpnPIN, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 720, 490));
+        jLabel31.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/data-protection.png"))); // NOI18N
+        jpnPIN.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, -1, -1));
 
-        jpnSoDu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel4.setBackground(new java.awt.Color(153, 255, 153));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jpnPIN.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 460, 740, 80));
 
-        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel13.setText("SỐ DƯ");
-        jpnSoDu.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 130, -1, -1));
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/folder.png"))); // NOI18N
+        jpnPIN.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 40, -1, -1));
 
-        jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel22.setText("Số Dư hiện tại : ");
-        jpnSoDu.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 210, 190, 60));
+        jPanel9.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTextField9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jpnSoDu.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 210, 370, 70));
+        jLabel32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/key.png"))); // NOI18N
+        jPanel9.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
-        btnThoat.setBackground(new java.awt.Color(255, 102, 102));
-        btnThoat.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnThoat.setText("Thoát");
-        btnThoat.setActionCommand("Xác Nhận");
-        btnThoat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnThoatActionPerformed(evt);
-            }
-        });
-        jpnSoDu.add(btnThoat, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 340, 120, 40));
+        jpnPIN.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 80, 80));
 
-        btnNapThem1.setBackground(new java.awt.Color(255, 102, 102));
-        btnNapThem1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnNapThem1.setText("Nạp Thêm");
-        btnNapThem1.setActionCommand("Xác Nhận");
-        btnNapThem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNapThem1ActionPerformed(evt);
-            }
-        });
-        jpnSoDu.add(btnNapThem1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 340, 120, 40));
+        jPanel3.add(jpnPIN, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 740, 540));
 
-        jPanel3.add(jpnSoDu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 720, 490));
-
+        jpnCHECKOUT.setBackground(new java.awt.Color(255, 255, 255));
         jpnCHECKOUT.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel26.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel26.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
         jLabel26.setText("THANH TOÁN");
-        jpnCHECKOUT.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 140, -1, -1));
+        jpnCHECKOUT.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, -1, -1));
 
         jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel27.setText("Nhập số tiền cần thanh toán :");
-        jpnCHECKOUT.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 280, 60));
+        jpnCHECKOUT.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 230, 280, 60));
 
         jTextField11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jpnCHECKOUT.add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 210, 370, 70));
+        jpnCHECKOUT.add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 290, 370, 70));
 
         btnThoat1.setBackground(new java.awt.Color(255, 102, 102));
         btnThoat1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -573,7 +596,7 @@ public class HomeForm extends javax.swing.JFrame {
                 btnThoat1ActionPerformed(evt);
             }
         });
-        jpnCHECKOUT.add(btnThoat1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 340, 120, 40));
+        jpnCHECKOUT.add(btnThoat1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 410, 120, 50));
 
         btnCheckOut.setBackground(new java.awt.Color(255, 102, 102));
         btnCheckOut.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -584,15 +607,135 @@ public class HomeForm extends javax.swing.JFrame {
                 btnCheckOutActionPerformed(evt);
             }
         });
-        jpnCHECKOUT.add(btnCheckOut, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 340, 140, 40));
+        jpnCHECKOUT.add(btnCheckOut, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 410, 140, 50));
 
-        jPanel3.add(jpnCHECKOUT, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 720, 490));
+        jPanel5.setBackground(new java.awt.Color(102, 204, 255));
+        jpnCHECKOUT.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, 110));
 
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/self-checkout.png"))); // NOI18N
+        jpnCHECKOUT.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 150, -1, -1));
+
+        jLabel34.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/credit-card.png"))); // NOI18N
+        jLabel34.setToolTipText("");
+        jpnCHECKOUT.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, -1, -1));
+
+        jPanel3.add(jpnCHECKOUT, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 740, 540));
+
+        jpnSoDu.setBackground(new java.awt.Color(255, 255, 255));
+        jpnSoDu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
+        jLabel13.setText("SỐ DƯ");
+        jpnSoDu.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, -1, -1));
+
+        jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
+        jLabel22.setText("Số Dư hiện tại : ");
+        jpnSoDu.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, 190, 60));
+
+        btnThoat.setBackground(new java.awt.Color(255, 102, 102));
+        btnThoat.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnThoat.setText("Thoát");
+        btnThoat.setActionCommand("Xác Nhận");
+        btnThoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoatActionPerformed(evt);
+            }
+        });
+        jpnSoDu.add(btnThoat, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 320, 130, 50));
+
+        btnNapThem1.setBackground(new java.awt.Color(255, 102, 102));
+        btnNapThem1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnNapThem1.setText("Nạp Thêm");
+        btnNapThem1.setActionCommand("Xác Nhận");
+        btnNapThem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNapThem1ActionPerformed(evt);
+            }
+        });
+        jpnSoDu.add(btnNapThem1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 320, 130, 50));
+
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/balance-scale.png"))); // NOI18N
+        jLabel11.setToolTipText("");
+        jpnSoDu.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 100, -1, -1));
+
+        jPanel6.setBackground(new java.awt.Color(153, 153, 255));
+        jpnSoDu.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 740, 100));
+
+        jLabel33.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/finance.png"))); // NOI18N
+        jpnSoDu.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
+        jlbMone.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
+        jlbMone.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jpnSoDu.add(jlbMone, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 200, 250, 60));
+
+        jLabel36.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
+        jLabel36.setText("VNĐ");
+        jpnSoDu.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 210, -1, -1));
+
+        jPanel3.add(jpnSoDu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 740, 540));
+
+        jpnNapTien.setBackground(new java.awt.Color(255, 255, 255));
+        jpnNapTien.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel24.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
+        jLabel24.setText("NẠP TIỀN");
+        jpnNapTien.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, -1, -1));
+
+        jLabel25.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jLabel25.setText("Nhập số tiền cần nạp :");
+        jpnNapTien.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 220, 230, 50));
+
+        jTextField10.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
+        jpnNapTien.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 270, 230, 60));
+
+        btnHuy.setBackground(new java.awt.Color(255, 102, 102));
+        btnHuy.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnHuy.setText("Hủy");
+        btnHuy.setActionCommand("Xác Nhận");
+        btnHuy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHuyActionPerformed(evt);
+            }
+        });
+        jpnNapTien.add(btnHuy, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 370, 120, 50));
+
+        btnNapTien.setBackground(new java.awt.Color(255, 102, 102));
+        btnNapTien.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnNapTien.setText("Nạp Tiền");
+        btnNapTien.setActionCommand("Xác Nhận");
+        btnNapTien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNapTienActionPerformed(evt);
+            }
+        });
+        jpnNapTien.add(btnNapTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 370, 120, 50));
+
+        jLabel35.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/nprien.png"))); // NOI18N
+        jpnNapTien.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, -1, -1));
+
+        jPanel7.setBackground(new java.awt.Color(102, 204, 255));
+        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jpnNapTien.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 540));
+
+        jPanel8.setBackground(new java.awt.Color(102, 102, 102));
+        jpnNapTien.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 0, 650, 60));
+
+        jLabel29.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/salary.png"))); // NOI18N
+        jLabel29.setToolTipText("");
+        jpnNapTien.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 130, -1, -1));
+
+        jLabel37.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
+        jLabel37.setText(".000 VNĐ");
+        jpnNapTien.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 280, -1, -1));
+
+        jPanel3.add(jpnNapTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 740, 540));
+
+        jpnHISTORY.setBackground(new java.awt.Color(255, 255, 255));
         jpnHISTORY.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel23.setText("LỊCH SỬ GIAO DỊCH");
-        jpnHISTORY.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, -1, -1));
+        jpnHISTORY.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 20, -1, -1));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -604,48 +747,14 @@ public class HomeForm extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jpnHISTORY.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 700, 360));
+        jpnHISTORY.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 700, -1));
 
-        jPanel3.add(jpnHISTORY, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 720, 490));
+        jLabel30.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/file.png"))); // NOI18N
+        jpnHISTORY.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 10, -1, -1));
 
-        jpnNapTien.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel3.add(jpnHISTORY, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 740, 540));
 
-        jLabel24.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel24.setText("NẠP TIỀN");
-        jpnNapTien.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 120, -1, -1));
-
-        jLabel25.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel25.setText("Nhập số tiền cần nạp :");
-        jpnNapTien.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, 190, 60));
-
-        jTextField10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jpnNapTien.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, 370, 60));
-
-        btnHuy.setBackground(new java.awt.Color(255, 102, 102));
-        btnHuy.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnHuy.setText("Hủy");
-        btnHuy.setActionCommand("Xác Nhận");
-        btnHuy.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHuyActionPerformed(evt);
-            }
-        });
-        jpnNapTien.add(btnHuy, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 340, 120, 40));
-
-        btnNapTien.setBackground(new java.awt.Color(255, 102, 102));
-        btnNapTien.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnNapTien.setText("Nạp Tiền");
-        btnNapTien.setActionCommand("Xác Nhận");
-        btnNapTien.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNapTienActionPerformed(evt);
-            }
-        });
-        jpnNapTien.add(btnNapTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 340, 120, 40));
-
-        jPanel3.add(jpnNapTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 720, 490));
-
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 760, 510));
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 760, 570));
 
         pack();
         setLocationRelativeTo(null);
@@ -709,6 +818,7 @@ public class HomeForm extends javax.swing.JFrame {
        jpnINFO.setVisible(false);
        jpnPIN.setVisible(false);
        jpnSoDu.setVisible(true);
+       jlbMone.setText("0");
        jpnHISTORY.setVisible(false);
        jpnNapTien.setVisible(false);
        jpnCHECKOUT.setVisible(false);
@@ -771,18 +881,7 @@ public class HomeForm extends javax.swing.JFrame {
        jpnCHECKOUT.setVisible(false);
     }//GEN-LAST:event_btnCanPINActionPerformed
 
-    // Edit button event
-    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
-       // SetEnable = true
-       System.out.println("Edit button clicked");
-       jTextField5.setEnabled(true);
-       jTextField6.setEnabled(true);
-       jTextField7.setEnabled(true);
-       jTextField8.setEnabled(true);
-       
-    }//GEN-LAST:event_btnEditActionPerformed
-    
+   
     // Update button
     private void btnUPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUPActionPerformed
         // TODO add your handling code here:
@@ -862,7 +961,12 @@ public class HomeForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnup1ActionPerformed
 
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
-        // TODO add your handling code here:
+        jpnINFO.setVisible(true);
+        jpnPIN.setVisible(false);
+        jpnCHECKOUT.setVisible(false);
+        jpnSoDu.setVisible(false);
+        jpnHISTORY.setVisible(false);
+        jpnNapTien.setVisible(false);        // TODO add your handling code here:
     }//GEN-LAST:event_btnThoatActionPerformed
 
     private void btnNapThem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNapThem1ActionPerformed
@@ -876,7 +980,12 @@ public class HomeForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNapThem1ActionPerformed
 
     private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
-        // TODO add your handling code here:
+        jpnINFO.setVisible(true);
+        jpnPIN.setVisible(false);
+        jpnCHECKOUT.setVisible(false);
+        jpnSoDu.setVisible(false);
+        jpnHISTORY.setVisible(false);
+        jpnNapTien.setVisible(false);        // TODO add your handling code here:
     }//GEN-LAST:event_btnHuyActionPerformed
 
     private void btnNapTienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNapTienActionPerformed
@@ -919,6 +1028,10 @@ public class HomeForm extends javax.swing.JFrame {
         jpnNapTien.setVisible(false);
         // TODO add your handling code here:
     }//GEN-LAST:event_jlbCheckOutMouseClicked
+
+    private void jTextField12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField12ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField12ActionPerformed
 
     
     /**
@@ -1004,7 +1117,6 @@ public class HomeForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCanPIN;
     private javax.swing.JButton btnCheckOut;
-    private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnHuy;
     private javax.swing.JButton btnNapThem1;
     private javax.swing.JButton btnNapTien;
@@ -1015,6 +1127,7 @@ public class HomeForm extends javax.swing.JFrame {
     private javax.swing.JButton btnupPIN;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -1032,16 +1145,37 @@ public class HomeForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
+    private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
@@ -1049,12 +1183,12 @@ public class HomeForm extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JLabel jlbCancel;
     private javax.swing.JLabel jlbCheckOut;
     private javax.swing.JLabel jlbConnect;
     private javax.swing.JLabel jlbHis;
     private javax.swing.JLabel jlbINFO;
+    private javax.swing.JLabel jlbMone;
     private javax.swing.JLabel jlbNap;
     private javax.swing.JLabel jlbPIN;
     private javax.swing.JLabel jlbSoDu;
