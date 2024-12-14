@@ -4,6 +4,8 @@
  */
 package bot_card;
 
+import java.io.ByteArrayOutputStream;
+import java.util.Arrays;
 import java.util.List;
 import javax.smartcardio.Card;
 import javax.smartcardio.CardChannel;
@@ -29,8 +31,7 @@ public class ConnectJavaCard {
     public String strAddress;
     public String strNumberPlate;
     public String message;
-    public boolean isSetup = false;
-    public boolean isSetData = false;
+
     
     // Khai bao doi tuong ket noi applet
     TerminalFactory factory;
@@ -86,7 +87,7 @@ public boolean disconnectCard(){
     return false;
 }
 
-   public void setUp(){
+    public void setUp(){
         
         try{
             factory = TerminalFactory.getDefault();
@@ -100,7 +101,6 @@ public boolean disconnectCard(){
             
             ResponseAPDU answer = channel.transmit(new CommandAPDU(0xB0,config.BOTAPPLET.INS_SETUP,0x00,0x00));
             
-            isSetup = true;
         }
         catch(CardException ex){
             //return "Error";
@@ -286,11 +286,8 @@ public boolean createPIN(String pin){
             System.out.println("Connection error");
         } else {
             System.out.println("Connect to card");
-            if (!isSetup) {
-                System.out.println("You need run set up");
-                setUp();
-                System.out.println("Set up done!");
-            }
+            setUp();
+            System.out.println("Set up done!");
             
             try {
                 factory = TerminalFactory.getDefault();
@@ -309,55 +306,72 @@ public boolean createPIN(String pin){
         return null;
     }
     
-    public boolean checkStatus() {
-        ResponseAPDU respond;
-        String kq = connectapplet();
-        if(!kq.contains("SW=9000")) {
-            System.out.println("Connection error");
-            return false;
-        } else {
-            System.out.println("Connect to card");
-            if (!isSetup) {
-                System.out.println("You need run set up");
-                setUp();
-                return true;
-            } else {
-                return true;
+    
+        public void sendImage(byte[] image) throws CardException {
+        connectapplet();
+        setUp();
+        int chunk_size = 243;
+        int chunk_blocks = (image.length + chunk_size - 1) / chunk_size;
+        for(int index = 0; index < chunk_blocks; index++) {
+            int offset = index * chunk_size;
+            int length = (chunk_size < (image.length - offset)) ? chunk_size : (image.length - offset);
+            
+            byte[] chunks = Arrays.copyOfRange(image, offset, offset+length);
+            
+            CommandAPDU commandAPDU = new CommandAPDU(
+                    0x00,
+                    config.BOTAPPLET.INS_SEND_IMAGE,
+                    index,
+                    0x00,
+                    chunks
+            );
+            
+            System.out.println("Sending chunk " + (index + 1) + "/" + chunk_blocks);
+            ResponseAPDU response = channel.transmit(commandAPDU);
+            
+            if (response.getSW() != 0x9000) {
+                throw new CardException("Error sending chunk: "+ (index+1));
             }
         }
     }
     
-    public void sendChunks(List<byte[]> chunks) throws CardException {
-        
-        String kq = connectapplet();
-        if(!kq.contains("SW=9000")) {
-            System.out.println("Connection error");
-        } else {
-            System.out.println("Connect to card");
-            if (!isSetup) {
-                System.out.println("You need run set up");
-                setUp();
-                System.out.println("Set up done!");
+    public byte[] fetchImageData() throws Exception {
+        connectapplet();
+        setUp();
+        // Bộ đệm để lưu toàn bộ dữ liệu ảnh
+        ByteArrayOutputStream imageData = new ByteArrayOutputStream();
+        int chunkSize;
+        byte[] buffer;
+
+        while (true) {
+            // Gửi lệnh yêu cầu chunk
+            CommandAPDU command = new CommandAPDU(0x00, config.BOTAPPLET.INS_GET_IMAGE, 0x00, 0x00);
+            ResponseAPDU response = channel.transmit(command);
+
+            // Lấy dữ liệu chunk từ phản hồi
+            buffer = response.getData();
+            chunkSize = buffer.length;
+            
+            if (chunkSize == 0) {
+                break;
             }
             
-            try {
-                factory = TerminalFactory.getDefault();
-                terminals = factory.terminals().list();
-                terminal = terminals.get(0);
-                card = terminal.connect("*");
-                channel = card.getBasicChannel();
-        
-                for (byte[] chunk : chunks) {
-                    CommandAPDU commandAPDU = new CommandAPDU(0x00, config.BOTAPPLET.INS_CREATE_IMAGE, 0x00, 0x00, chunk);
-                    ResponseAPDU responseAPDU = channel.transmit(commandAPDU);
-                    if (responseAPDU.getSW() != 0x9000) {
-                        throw new CardException("Error sending chunk: " + Integer.toHexString(responseAPDU.getSW()));
-                    }
-                }
-            } catch(CardException e) {
-            
+            // Ghi chunk vào bộ đệm
+            imageData.write(buffer, 0, chunkSize);
+
+            // Kiểm tra trạng thái hoàn tất
+            if (response.getSW() == 0x9000) {
+                continue; // Toàn bộ dữ liệu đã được nhận
             }
         }
+
+        // Ngắt kết nối thẻ
+        card.disconnect(false);
+
+        return imageData.toByteArray();
     }
+    
+        
+     
     
 }

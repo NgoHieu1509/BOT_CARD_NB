@@ -4,12 +4,26 @@
  */
 package bot_card;
 
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import javax.smartcardio.CardException;
+import javax.smartcardio.CommandAPDU;
+import javax.smartcardio.ResponseAPDU;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
  * @author N ~ N
  */
 public class StartForm extends javax.swing.JFrame {
-
+    
+    private final ConnectJavaCard card = new ConnectJavaCard();
     /**
      * Creates new form StartForm
      */
@@ -136,6 +150,11 @@ public class StartForm extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(153, 255, 153));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jButton1.setText("Upload ");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 390, 100, 40));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/4529084.jpg"))); // NOI18N
@@ -147,6 +166,67 @@ public class StartForm extends javax.swing.JFrame {
 
     private void btnAcpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcpActionPerformed
         // TODO add your handling code here:
+        // Kiem tra isEmpty
+        card.strID = jTextField1.getText();
+        card.strName = jTextField2.getText();
+        card.strAddress = jTextField4.getText();
+        card.strDate = jTextField3.getText();
+        card.strNumberPlate = jTextField5.getText();
+        
+        // kiem tra label co anh?
+        if (jlbUpLoad.getIcon() == null) {
+            JOptionPane.showMessageDialog(this, "Empty image");
+            return;
+        }
+        
+        if (card.strID.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Empty field ID");
+            return;
+        }
+        if (card.strName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Empty field name");
+            return;
+        }
+        
+        if (card.strAddress.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Empty field addrss");
+            return;
+        }
+        
+        if (card.strDate.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Empty field date");
+            return;
+        }
+        
+        if (card.strNumberPlate.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Empty field number plate");
+            return;
+        }
+        
+        // Set data app -> card
+        String dataSend = String.join(",",card.strID, card.strName,card.strDate, card.strAddress,card.strNumberPlate);
+        card.data = dataSend.getBytes(StandardCharsets.UTF_8);
+         // Send request
+        ResponseAPDU respond;
+        respond = card.sendRequest(
+                new CommandAPDU(0x00,config.BOTAPPLET.INS_SET_DATA,0x00,0x00,card.data)
+        );
+        
+        System.out.println(respond.toString());
+        String result = Integer.toHexString(respond.getSW());
+        if(result.equals("9000")) {
+            System.out.println("Send data to card success");
+            JOptionPane.showMessageDialog(this, "Khoi tao du lieu thanh cong.");
+        } else {
+            System.out.println("Error command APDU");
+            return;
+        }
+        
+        // Navigate to HomeForm
+        HomeForm home = new HomeForm();
+        home.setVisible(true);
+        this.dispose();
+        
     }//GEN-LAST:event_btnAcpActionPerformed
 
     private void jlbxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbxMouseClicked
@@ -154,6 +234,49 @@ public class StartForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jlbxMouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        // Image data process
+                byte[] originalImageBytes  = selectImage();
+        if (originalImageBytes  != null) {
+            JOptionPane.showMessageDialog(this, "Image selected successfully!");
+            
+            try {
+                card.sendImage(originalImageBytes);
+            } catch (CardException ex) {
+                ex.printStackTrace();
+                return;
+            }
+        }
+        
+        ImageIcon imageIcon = new ImageIcon(originalImageBytes );
+        
+        // Lay kich thuoc khung cua label
+        int width = jlbUpLoad.getWidth();
+        int height = jlbUpLoad.getHeight();
+        
+        //Scale image
+        Image scaledImage;
+        scaledImage = imageIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        jlbUpLoad.setIcon(new ImageIcon(scaledImage));
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+    
+        private byte[] selectImage() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Image Files", "jpg", "png", "jpeg", "bmp"));
+        int result = fileChooser.showOpenDialog(this);
+
+        if (result == JFileChooser.APPROVE_OPTION) {
+            try {
+                File file = fileChooser.getSelectedFile();
+                return Files.readAllBytes(file.toPath()); // Đọc ảnh thành byte array
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Error reading image: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        return null;
+    }
     /**
      * @param args the command line arguments
      */

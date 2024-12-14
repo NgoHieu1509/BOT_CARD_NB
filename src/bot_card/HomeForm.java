@@ -8,9 +8,12 @@ import java.awt.Graphics2D;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -51,14 +54,22 @@ public class HomeForm extends javax.swing.JFrame {
        jpnNapTien.setVisible(false);
        jpnCHECKOUT.setVisible(false);
        
+        // Test ID field
+       jTextField12.setEnabled(false);
+       /*
        jTextField5.setEnabled(false);
        jTextField6.setEnabled(false);
        jTextField7.setEnabled(false);
        jTextField8.setEnabled(false);
        jTextField12.setEnabled(false);
+       */
        
-        if (card.checkStatus()) {
-             // Field 12 - id
+       ResponseAPDU responseCheck = card.sendRequest(
+               new CommandAPDU(0x00,config.BOTAPPLET.INS_CHECK,0x00,0x00)
+       );
+       
+        if (responseCheck.getSW() == 0x9000) {
+            // Field 12 - id
             jTextField12.setText(getDataString(config.BOTAPPLET.P1_OUT_ID));
             // Field 6 - name
             jTextField6.setText(getDataString(config.BOTAPPLET.P1_OUT_NAME));
@@ -69,24 +80,17 @@ public class HomeForm extends javax.swing.JFrame {
             // Field 5 - Number plate
             jTextField5.setText(getDataString(config.BOTAPPLET.P1_OUT_NUMBER_PLATE));
             
-            /*
-            // Image
+             // Image
             try {
-                card.image = card.retrieveImage();
-            juploadpt1.setIcon(
-                    new ImageIcon(card.image)
-            );
-            System.out.println("Relieve image success");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            */
-            
+                card.image = card.fetchImageData();
+                System.out.println(Arrays.toString(card.image));
+                displayImage(card.image);
+            } catch (Exception ex) {
+                ex.printStackTrace();
         }
         System.out.println("Chua set data -> card");
-
-       
-    }
+    }      
+}
 
     public HomeForm(JButton btnCanPIN, JButton btnHuy, JButton btnNapThem1, JButton btnNapTien, JButton btnThoat, JButton btnUP, JButton btnup1, JButton btnupPIN, JLabel jLabel1, JLabel jLabel10, JLabel jLabel12, JLabel jLabel13, JLabel jLabel14, JLabel jLabel15, JLabel jLabel16, JLabel jLabel17, JLabel jLabel18, JLabel jLabel19, JLabel jLabel2, JLabel jLabel20, JLabel jLabel21, JLabel jLabel22, JLabel jLabel23, JLabel jLabel24, JLabel jLabel25, JLabel jLabel3, JLabel jLabel4, JLabel jLabel8, JPanel jPanel1, JPanel jPanel2, JPanel jPanel3, JScrollPane jScrollPane1, JTable jTable1, JTextField jTextField10, JTextField jTextField2, JTextField jTextField3, JTextField jTextField4, JTextField jTextField5, JTextField jTextField6, JTextField jTextField7, JTextField jTextField8, JLabel jlbCancel, JLabel jlbConnect, JLabel jlbHis, JLabel jlbINFO, JLabel jlbNap, JLabel jlbPIN, JLabel jlbSoDu, JPanel jpnConnect, JPanel jpnHISTORY, JPanel jpnINFO, JPanel jpnNapTien, JPanel jpnPIN, JPanel jpnSoDu, JPanel jpnbank1, JPanel jpnhis, JPanel jpnif2, JPanel jpnpin, JPanel jpnsoDu2, JLabel juploadpt1) throws HeadlessException {
         this.btnCanPIN = btnCanPIN;
@@ -779,22 +783,43 @@ public class HomeForm extends javax.swing.JFrame {
         }
         return kq;
     }
-
-    private byte[] selectImage() {
-    JFileChooser fileChooser = new JFileChooser();
-    fileChooser.setFileFilter(new FileNameExtensionFilter("Image Files", "jpg", "png", "jpeg", "bmp"));
-    int result = fileChooser.showOpenDialog(this);
     
-    if (result == JFileChooser.APPROVE_OPTION) {
-        try {
-            File file = fileChooser.getSelectedFile();
-            return Files.readAllBytes(file.toPath()); // Đọc ảnh thành byte array
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Error reading image: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        private void displayImage(byte[] imageBytes) throws Exception {
+        // Chuyển đổi byte array thành BufferedImage
+        ByteArrayInputStream bis = new ByteArrayInputStream(imageBytes);
+        BufferedImage image = ImageIO.read(bis);
+
+        // Hiển thị ảnh trong JFrame
+        // juploadpt1.setIcon(new ImageIcon(image));
+        
+        ImageIcon imageIcon = new ImageIcon(imageBytes );
+        
+        // Kich thuoc o juploadpt1
+        int width = juploadpt1.getWidth();
+        int height = juploadpt1.getHeight();
+        
+        //Scale image
+        Image scaledImage;
+        scaledImage = imageIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        juploadpt1.setIcon(new ImageIcon(scaledImage));
+
     }
-    return null;
-}
+    
+    private byte[] selectImage() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Image Files", "jpg", "png", "jpeg", "bmp"));
+        int result = fileChooser.showOpenDialog(this);
+
+        if (result == JFileChooser.APPROVE_OPTION) {
+            try {
+                File file = fileChooser.getSelectedFile();
+                return Files.readAllBytes(file.toPath()); // Đọc ảnh thành byte array
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Error reading image: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        return null;
+    }
 
     private void jlbINFOMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbINFOMouseClicked
        jpnINFO.setVisible(true);
@@ -887,15 +912,36 @@ public class HomeForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         // Send commandAPDU to Card _ INS_SET
         
+        card.strID = jTextField12.getText();
         card.strName = jTextField6.getText();
         card.strAddress = jTextField8.getText();
         card.strDate = jTextField7.getText();
         card.strNumberPlate = jTextField5.getText();
         
+        if (card.strName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Empty field name");
+            return;
+        }
+        
+        if (card.strAddress.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Empty field addrss");
+            return;
+        }
+        
+        if (card.strDate.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Empty field date");
+            return;
+        }
+        
+        if (card.strNumberPlate.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Empty field number plate");
+            return;
+        }
+        
         // Get string data
-        String dataSend = String.join(",", card.strName, card.strDate, card.strAddress, card.strNumberPlate);
+        String dataSend = String.join(",",card.strID, card.strName, card.strDate, card.strAddress, card.strNumberPlate);
         card.data = dataSend.getBytes(StandardCharsets.UTF_8);
-       
+        
         // Send request
         ResponseAPDU respond;
         respond = card.sendRequest(
@@ -910,14 +956,6 @@ public class HomeForm extends javax.swing.JFrame {
             System.out.println("Error command APDU");
         }
         
-        // Set editable = false
-        jTextField5.setEnabled(false);
-        jTextField6.setEnabled(false);
-        jTextField7.setEnabled(false);
-        jTextField8.setEnabled(false);
-        
-        card.isSetData = true;
-        
     }//GEN-LAST:event_btnUPActionPerformed
     
     // Button select image
@@ -926,14 +964,11 @@ public class HomeForm extends javax.swing.JFrame {
         byte[] originalImageBytes  = selectImage();
         if (originalImageBytes  != null) {
             JOptionPane.showMessageDialog(this, "Image selected successfully!");
-             // Get image
-            List<byte[]> chunks = splitByteArray(originalImageBytes, 243);
-
+            
             try {
-                card.sendChunks(chunks);
-                JOptionPane.showMessageDialog(this, "Send image to card success");
-            } catch (CardException e) {
-                JOptionPane.showMessageDialog(this, "Send image to card err: "+ e.getMessage());
+                card.sendImage(originalImageBytes);
+            } catch (CardException ex) {
+                ex.printStackTrace();
             }
         }
         
@@ -948,15 +983,6 @@ public class HomeForm extends javax.swing.JFrame {
         scaledImage = imageIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
         juploadpt1.setIcon(new ImageIcon(scaledImage));
         
-        // Chuyển ảnh đã scale thành byte[]
-        try {
-            byte[] scaledImageBytes = imageToByteArray(scaledImage, "png");
-            // Sout mảng byte
-            System.out.println("Scaled Image Bytes: " + bytesToHex(scaledImageBytes));
-            System.out.println(scaledImageBytes.length);
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Error converting image to bytes: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
         
     }//GEN-LAST:event_btnup1ActionPerformed
 
