@@ -184,6 +184,7 @@ public class loginForm extends javax.swing.JFrame {
 
     private void btnSwitchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSwitchActionPerformed
         // TODO add your handling code here:
+        new AdminForm().setVisible(true);
         
     }//GEN-LAST:event_btnSwitchActionPerformed
 
