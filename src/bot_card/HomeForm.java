@@ -774,7 +774,8 @@ public class HomeForm extends javax.swing.JFrame {
 
             String result = Integer.toHexString(respond.getSW());
             if(result.equals("9000")) {
-                kq = hexToString(respond.getData());
+                kq = new String(respond.getData(),StandardCharsets.UTF_8);
+                //kq = hexToString(respond.getData());
             } else {
                 System.out.println("Error command APDU");
             }
