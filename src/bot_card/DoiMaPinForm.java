@@ -117,18 +117,18 @@ public class DoiMaPinForm extends javax.swing.JFrame {
         
         if(txtSave.equals(txtXacnhan) && !txtSave.equals("Botcard")){
             if(connect.createPIN(txtSave)){
-                HomeForm home = new HomeForm();
+                //HomeForm home = new HomeForm();
+                StartForm form = new StartForm();
                 JOptionPane.showMessageDialog(null, "Đổi mã PIN thành công!");
-                home.setVisible(true);
+                //home.setVisible(true);
+                form.setVisible(true);
                 this.dispose();
             }
             else{
                  JOptionPane.showMessageDialog(null, "Lỗi khi lưu PIN");
-            
             }            
         }
         else{
-        
              JOptionPane.showMessageDialog(null, "Kiểm tra lại mã PIN");
         }
     }//GEN-LAST:event_btnSaveActionPerformed
