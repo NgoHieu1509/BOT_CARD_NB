@@ -4,17 +4,38 @@
  */
 package bot_card;
 
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import javax.smartcardio.CardException;
+import javax.smartcardio.CommandAPDU;
+import javax.smartcardio.ResponseAPDU;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
  * @author N ~ N
  */
 public class StartForm extends javax.swing.JFrame {
-
+    
+    private final ConnectJavaCard card = new ConnectJavaCard();
     /**
      * Creates new form StartForm
      */
     public StartForm() {
         initComponents();
+        
+        // enable id = true
+        jTextField1.setEnabled(false);
     }
 
     /**
@@ -80,6 +101,11 @@ public class StartForm extends javax.swing.JFrame {
         jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 40, -1));
 
         jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
         jPanel3.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, 280, 40));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
@@ -90,7 +116,7 @@ public class StartForm extends javax.swing.JFrame {
         jPanel3.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 280, 40));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jLabel5.setText("Năm sinh :");
+        jLabel5.setText("Ngày sinh :");
         jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 100, -1));
 
         jTextField3.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
@@ -136,6 +162,11 @@ public class StartForm extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(153, 255, 153));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jButton1.setText("Upload ");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 390, 100, 40));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/4529084.jpg"))); // NOI18N
@@ -147,6 +178,113 @@ public class StartForm extends javax.swing.JFrame {
 
     private void btnAcpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcpActionPerformed
         // TODO add your handling code here:
+        // Bien tam de generate ID - age
+        int age;
+        
+        card.strID = jTextField1.getText();
+        card.strName = jTextField2.getText();
+        card.strAddress = jTextField4.getText();
+        card.strDate = jTextField3.getText();
+        card.strNumberPlate = jTextField5.getText();
+        
+        
+        
+        // kiem tra anh da chon.
+        /*
+        if (jlbUpLoad.getIcon() == null) {
+            JOptionPane.showMessageDialog(this, "Empty image");
+            return;
+        }
+        */
+        if (!isValidName(card.strName)) {
+            // Notify null
+            if (card.strName == null || card.strName.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Trống trường tên");
+                return;
+            }
+            if (card.strName.length() < 2) {
+                JOptionPane.showMessageDialog(this, "Tên quá ngắn (< 2 kí tự)");
+            } else if (card.strName.length() > 50) {
+                JOptionPane.showMessageDialog(this, "Tên quá dài (> 50 kí tự)");
+            } else {
+                JOptionPane.showMessageDialog(this, "Trong tên có số");
+            } 
+            return;
+        }
+        /*
+        if (card.strID.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Empty field ID");
+            return;
+        }
+        */
+        if (!isValidAddress(card.strAddress)) {
+            // Check address null
+            if (card.strAddress == null || card.strAddress.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Trống trường địa chỉ");
+                return;
+            }
+            
+            if (card.strAddress.length() < 2) {
+                JOptionPane.showMessageDialog(this, "Địa chỉ quá ngắn (< 2 kí tự)");
+            } else {
+                JOptionPane.showMessageDialog(this, "Địa chỉ quá dài (> 50 kí tự)");
+            } 
+            return;
+            
+        }
+        
+        if (!isValidDob(card.strDate)) {
+            return;
+        }
+        
+        if (!isValidNumberPlate(card.strNumberPlate)) {
+            
+            if (card.strNumberPlate.isEmpty()) {
+                return;
+            }
+            
+            JOptionPane.showMessageDialog(this, "Sai định dạng: Eg: 30A-888.88");
+            return;
+        }
+        
+        try {
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate dobDate = LocalDate.parse(card.strDate, dateTimeFormatter);
+            LocalDate currentDate = LocalDate.now();
+            
+            age = currentDate.getYear() - dobDate.getYear();
+            
+            card.strID = CustomIDGenerator.generateID(age);
+        } catch (Exception e) {
+            System.out.println("Khong tim duoc tuoi");
+        }
+        
+        
+        
+        // Set data app -> card
+        String dataSend = String.join(",",card.strID, card.strName,card.strDate, card.strAddress,card.strNumberPlate);
+        card.data = dataSend.getBytes(StandardCharsets.UTF_8);
+         // Send request
+        ResponseAPDU respond;
+        respond = card.sendRequest(
+                new CommandAPDU(0x00,config.BOTAPPLET.INS_SET_DATA,0x00,0x00,card.data)
+        );
+        
+        System.out.println(respond.toString());
+        String result = Integer.toHexString(respond.getSW());
+        if(result.equals("9000")) {
+            System.out.println("Send data to card success");
+            JOptionPane.showMessageDialog(this, "Khoi tao du lieu thanh cong.");
+        } else {
+            System.out.println("Error command APDU");
+            return;
+        }
+        
+        // Navigate to HomeForm
+        HomeForm home = new HomeForm();
+        home.setVisible(true);
+        this.dispose();
+        
     }//GEN-LAST:event_btnAcpActionPerformed
 
     private void jlbxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbxMouseClicked
@@ -154,6 +292,128 @@ public class StartForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jlbxMouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        // Image data process
+                byte[] originalImageBytes  = selectImage();
+        if (originalImageBytes  != null) {
+            JOptionPane.showMessageDialog(this, "Image selected successfully!");
+            
+            try {
+                card.sendImage(originalImageBytes);
+            } catch (CardException ex) {
+                ex.printStackTrace();
+                return;
+            }
+        }
+        
+        ImageIcon imageIcon = new ImageIcon(originalImageBytes );
+        
+        // Lay kich thuoc khung cua label
+        int width = jlbUpLoad.getWidth();
+        int height = jlbUpLoad.getHeight();
+        
+        //Scale image
+        Image scaledImage;
+        scaledImage = imageIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        jlbUpLoad.setIcon(new ImageIcon(scaledImage));
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+    
+    // Validate name
+    public boolean isValidName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            return false; // Check null
+        }
+        String regex = "^[\\p{L}\\s]{2,50}$"; // Only alphabet, leng = 2 -> 50
+        return name.matches(regex);
+    }
+    
+    // Validate dob
+    public boolean isValidDob(String dob) {
+        
+        if (dob == null || dob.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Trống trường ngày sinh");
+            return false;
+        }
+        
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        // Check dob is exsit (eg: 30/02/2002)
+        dateFormat.setLenient(false);
+        
+        try {
+            Date dateOfBirth = dateFormat.parse(dob);
+            Date currentDate = new Date();
+            
+            // Kiem tra ngay sinh co lon hon hien tai
+            // Eg: DoB = 30/12/2024 (Error)
+            if (dateOfBirth.after(currentDate)) {
+                JOptionPane.showMessageDialog(this, "Bạn chưa được sinh ra.");
+                return false;
+            }
+            
+            // Kiem tra tuoi co phu hop khong
+            long ageInMillis = currentDate.getTime() - dateOfBirth.getTime();
+            int age = (int) (ageInMillis / (1000L * 60 * 60 * 24 *365));
+            
+            if (age < 18) {
+                JOptionPane.showMessageDialog(this, "Bạn chưa đủ tuổi.");
+                return false;  
+            } else if (age > 90) {
+                JOptionPane.showMessageDialog(this, "Bạn quá tuổi");
+                return false;
+            } else {
+                return true;
+            }
+            //return ((age >= 18) && (age <=90));
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Ngày sinh không tồn tại");
+            return false;
+        }
+    }
+    
+    // Validate address
+    public boolean isValidAddress(String address) {
+        if (address == null || address.trim().isEmpty()) {
+            return false; // 
+        }
+        // Length = 2: eg: HN, HP, BG
+        return address.length() >= 2 && address.length() <= 50; // 2 <= Length <= 59
+    }
+
+    // Validate number plate
+    public boolean isValidNumberPlate(String numberPlate) {
+        if (numberPlate == null || numberPlate.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Trống trường biển số xe");
+            return false; // 
+        }
+        //
+        // format "29F-888.88"
+        String regex = "^[0-9]{2}[A-Z]-[0-9]{3}\\.[0-9]{2}$";
+        return numberPlate.matches(regex);
+    }
+
+    
+    private byte[] selectImage() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Image Files", "jpg", "png", "jpeg", "bmp"));
+        int result = fileChooser.showOpenDialog(this);
+
+        if (result == JFileChooser.APPROVE_OPTION) {
+            try {
+                File file = fileChooser.getSelectedFile();
+                return Files.readAllBytes(file.toPath()); // Read image -> byte array
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Error reading image: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        return null;
+    }
     /**
      * @param args the command line arguments
      */

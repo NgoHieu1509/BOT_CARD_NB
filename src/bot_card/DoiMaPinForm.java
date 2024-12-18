@@ -39,29 +39,31 @@ public class DoiMaPinForm extends javax.swing.JFrame {
         btnSave = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        jlbSaw2 = new javax.swing.JLabel();
+        jlbSaw1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Nhập mã PIN mới");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 114, 146, 58));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, 146, 58));
 
-        txtNewPin.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtNewPin.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         txtNewPin.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        jPanel1.add(txtNewPin, new org.netbeans.lib.awtextra.AbsoluteConstraints(275, 114, 194, 58));
+        jPanel1.add(txtNewPin, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, 194, 58));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Xác nhận mã PIN mới");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 243, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, -1, -1));
 
-        txtConfirmPin.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtConfirmPin.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         txtConfirmPin.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        jPanel1.add(txtConfirmPin, new org.netbeans.lib.awtextra.AbsoluteConstraints(275, 221, 194, 58));
+        jPanel1.add(txtConfirmPin, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 200, 194, 58));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -76,7 +78,7 @@ public class DoiMaPinForm extends javax.swing.JFrame {
                 btnSaveActionPerformed(evt);
             }
         });
-        jPanel1.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(137, 331, 114, 36));
+        jPanel1.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, 114, 36));
 
         btnExit.setBackground(new java.awt.Color(255, 102, 102));
         btnExit.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -86,8 +88,26 @@ public class DoiMaPinForm extends javax.swing.JFrame {
                 btnExitActionPerformed(evt);
             }
         });
-        jPanel1.add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(331, 331, 110, 36));
+        jPanel1.add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 310, 110, 36));
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(49, 27, 37, -1));
+
+        jlbSaw2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/see.png"))); // NOI18N
+        jlbSaw2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jlbSaw2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlbSaw2MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jlbSaw2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 210, 40, 40));
+
+        jlbSaw1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/see.png"))); // NOI18N
+        jlbSaw1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jlbSaw1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlbSaw1MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jlbSaw1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 104, 40, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -100,9 +120,9 @@ public class DoiMaPinForm extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -117,18 +137,18 @@ public class DoiMaPinForm extends javax.swing.JFrame {
         
         if(txtSave.equals(txtXacnhan) && !txtSave.equals("Botcard")){
             if(connect.createPIN(txtSave)){
-                HomeForm home = new HomeForm();
+                //HomeForm home = new HomeForm();
+                StartForm form = new StartForm();
                 JOptionPane.showMessageDialog(null, "Đổi mã PIN thành công!");
-                home.setVisible(true);
+                //home.setVisible(true);
+                form.setVisible(true);
                 this.dispose();
             }
             else{
                  JOptionPane.showMessageDialog(null, "Lỗi khi lưu PIN");
-            
             }            
         }
         else{
-        
              JOptionPane.showMessageDialog(null, "Kiểm tra lại mã PIN");
         }
     }//GEN-LAST:event_btnSaveActionPerformed
@@ -137,6 +157,24 @@ public class DoiMaPinForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         new loginForm().setVisible(true);
     }//GEN-LAST:event_btnExitActionPerformed
+
+    private void jlbSaw1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbSaw1MouseClicked
+        // TODO add your handling code here:
+         if (txtNewPin.getEchoChar() == '*') {
+        txtNewPin.setEchoChar((char) 0); // Hiện mã PIN
+        } else {
+        txtNewPin.setEchoChar('*'); // Ẩn mã PIN
+        }
+    }//GEN-LAST:event_jlbSaw1MouseClicked
+
+    private void jlbSaw2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbSaw2MouseClicked
+        // TODO add your handling code here:
+         if (txtConfirmPin.getEchoChar() == '*') {
+        txtConfirmPin.setEchoChar((char) 0); // Hiện mã PIN
+        } else {
+        txtConfirmPin.setEchoChar('*'); // Ẩn mã PIN
+        }
+    }//GEN-LAST:event_jlbSaw2MouseClicked
 
     /**
      * @param args the command line arguments
@@ -181,6 +219,8 @@ public class DoiMaPinForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jlbSaw1;
+    private javax.swing.JLabel jlbSaw2;
     private javax.swing.JPasswordField txtConfirmPin;
     private javax.swing.JPasswordField txtNewPin;
     // End of variables declaration//GEN-END:variables
