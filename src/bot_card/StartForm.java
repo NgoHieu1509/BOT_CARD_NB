@@ -9,6 +9,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import javax.smartcardio.CardException;
 import javax.smartcardio.CommandAPDU;
 import javax.smartcardio.ResponseAPDU;
@@ -29,6 +33,9 @@ public class StartForm extends javax.swing.JFrame {
      */
     public StartForm() {
         initComponents();
+        
+        // enable id = true
+        jTextField1.setEnabled(false);
     }
 
     /**
@@ -94,6 +101,11 @@ public class StartForm extends javax.swing.JFrame {
         jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 40, -1));
 
         jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
         jPanel3.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, 280, 40));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
@@ -104,7 +116,7 @@ public class StartForm extends javax.swing.JFrame {
         jPanel3.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 280, 40));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jLabel5.setText("Năm sinh :");
+        jLabel5.setText("Ngày sinh :");
         jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 100, -1));
 
         jTextField3.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
@@ -166,42 +178,88 @@ public class StartForm extends javax.swing.JFrame {
 
     private void btnAcpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcpActionPerformed
         // TODO add your handling code here:
-        // Kiem tra isEmpty
+        // Bien tam de generate ID - age
+        int age;
+        
         card.strID = jTextField1.getText();
         card.strName = jTextField2.getText();
         card.strAddress = jTextField4.getText();
         card.strDate = jTextField3.getText();
         card.strNumberPlate = jTextField5.getText();
         
-        // kiem tra label co anh?
+        
+        
+        // kiem tra anh da chon.
+        /*
         if (jlbUpLoad.getIcon() == null) {
             JOptionPane.showMessageDialog(this, "Empty image");
             return;
         }
-        
+        */
+        if (!isValidName(card.strName)) {
+            // Notify null
+            if (card.strName == null || card.strName.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Trống trường tên");
+                return;
+            }
+            if (card.strName.length() < 2) {
+                JOptionPane.showMessageDialog(this, "Tên quá ngắn (< 2 kí tự)");
+            } else if (card.strName.length() > 50) {
+                JOptionPane.showMessageDialog(this, "Tên quá dài (> 50 kí tự)");
+            } else {
+                JOptionPane.showMessageDialog(this, "Trong tên có số");
+            } 
+            return;
+        }
+        /*
         if (card.strID.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Empty field ID");
             return;
         }
-        if (card.strName.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Empty field name");
+        */
+        if (!isValidAddress(card.strAddress)) {
+            // Check address null
+            if (card.strAddress == null || card.strAddress.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Trống trường địa chỉ");
+                return;
+            }
+            
+            if (card.strAddress.length() < 2) {
+                JOptionPane.showMessageDialog(this, "Địa chỉ quá ngắn (< 2 kí tự)");
+            } else {
+                JOptionPane.showMessageDialog(this, "Địa chỉ quá dài (> 50 kí tự)");
+            } 
+            return;
+            
+        }
+        
+        if (!isValidDob(card.strDate)) {
             return;
         }
         
-        if (card.strAddress.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Empty field addrss");
+        if (!isValidNumberPlate(card.strNumberPlate)) {
+            
+            if (card.strNumberPlate.isEmpty()) {
+                return;
+            }
+            
+            JOptionPane.showMessageDialog(this, "Sai định dạng: Eg: 30A-888.88");
             return;
         }
         
-        if (card.strDate.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Empty field date");
-            return;
+        try {
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate dobDate = LocalDate.parse(card.strDate, dateTimeFormatter);
+            LocalDate currentDate = LocalDate.now();
+            
+            age = currentDate.getYear() - dobDate.getYear();
+            
+            card.strID = CustomIDGenerator.generateID(age);
+        } catch (Exception e) {
+            System.out.println("Khong tim duoc tuoi");
         }
         
-        if (card.strNumberPlate.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Empty field number plate");
-            return;
-        }
+        
         
         // Set data app -> card
         String dataSend = String.join(",",card.strID, card.strName,card.strDate, card.strAddress,card.strNumberPlate);
@@ -261,8 +319,87 @@ public class StartForm extends javax.swing.JFrame {
         jlbUpLoad.setIcon(new ImageIcon(scaledImage));
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
     
-        private byte[] selectImage() {
+    // Validate name
+    public boolean isValidName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            return false; // Check null
+        }
+        String regex = "^[\\p{L}\\s]{2,50}$"; // Only alphabet, leng = 2 -> 50
+        return name.matches(regex);
+    }
+    
+    // Validate dob
+    public boolean isValidDob(String dob) {
+        
+        if (dob == null || dob.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Trống trường ngày sinh");
+            return false;
+        }
+        
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        // Check dob is exsit (eg: 30/02/2002)
+        dateFormat.setLenient(false);
+        
+        try {
+            Date dateOfBirth = dateFormat.parse(dob);
+            Date currentDate = new Date();
+            
+            // Kiem tra ngay sinh co lon hon hien tai
+            // Eg: DoB = 30/12/2024 (Error)
+            if (dateOfBirth.after(currentDate)) {
+                JOptionPane.showMessageDialog(this, "Bạn chưa được sinh ra.");
+                return false;
+            }
+            
+            // Kiem tra tuoi co phu hop khong
+            long ageInMillis = currentDate.getTime() - dateOfBirth.getTime();
+            int age = (int) (ageInMillis / (1000L * 60 * 60 * 24 *365));
+            
+            if (age < 18) {
+                JOptionPane.showMessageDialog(this, "Bạn chưa đủ tuổi.");
+                return false;  
+            } else if (age > 90) {
+                JOptionPane.showMessageDialog(this, "Bạn quá tuổi");
+                return false;
+            } else {
+                return true;
+            }
+            //return ((age >= 18) && (age <=90));
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Ngày sinh không tồn tại");
+            return false;
+        }
+    }
+    
+    // Validate address
+    public boolean isValidAddress(String address) {
+        if (address == null || address.trim().isEmpty()) {
+            return false; // 
+        }
+        // Length = 2: eg: HN, HP, BG
+        return address.length() >= 2 && address.length() <= 50; // 2 <= Length <= 59
+    }
+
+    // Validate number plate
+    public boolean isValidNumberPlate(String numberPlate) {
+        if (numberPlate == null || numberPlate.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Trống trường biển số xe");
+            return false; // 
+        }
+        //
+        // format "29F-888.88"
+        String regex = "^[0-9]{2}[A-Z]-[0-9]{3}\\.[0-9]{2}$";
+        return numberPlate.matches(regex);
+    }
+
+    
+    private byte[] selectImage() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileFilter(new FileNameExtensionFilter("Image Files", "jpg", "png", "jpeg", "bmp"));
         int result = fileChooser.showOpenDialog(this);
@@ -270,7 +407,7 @@ public class StartForm extends javax.swing.JFrame {
         if (result == JFileChooser.APPROVE_OPTION) {
             try {
                 File file = fileChooser.getSelectedFile();
-                return Files.readAllBytes(file.toPath()); // Đọc ảnh thành byte array
+                return Files.readAllBytes(file.toPath()); // Read image -> byte array
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(this, "Error reading image: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
