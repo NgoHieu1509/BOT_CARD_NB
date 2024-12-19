@@ -20,6 +20,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import org.xml.sax.Attributes;
 
 /**
  *
@@ -243,7 +244,7 @@ public class StartForm extends javax.swing.JFrame {
                 return;
             }
             
-            JOptionPane.showMessageDialog(this, "Sai định dạng: Eg: 30A-888.88");
+            JOptionPane.showMessageDialog(this, "Sai định dạng biển số: Eg: 30A-888.88");
             return;
         }
         
