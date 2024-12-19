@@ -216,7 +216,7 @@ public class StartForm extends javax.swing.JFrame {
         String result = Integer.toHexString(respond.getSW());
         if(result.equals("9000")) {
             System.out.println("Send data to card success");
-            JOptionPane.showMessageDialog(this, "Khoi tao du lieu thanh cong.");
+            JOptionPane.showMessageDialog(this, "Khởi tạo dữ liệu thành công.");
         } else {
             System.out.println("Error command APDU");
             return;

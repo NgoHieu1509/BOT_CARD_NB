@@ -223,8 +223,9 @@ public class loginForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         String pin = txtmapin.getText();
         // ConnectJavaCard connect = new ConnectJavaCard();
-        
+            
         if (connect.verifyPin(pin)) {
+            
             if (firstUSE == 1) {
                 
                 DoiMaPinForm form = new DoiMaPinForm();
@@ -232,7 +233,8 @@ public class loginForm extends javax.swing.JFrame {
                 this.dispose();
                 
             } else {
-                
+                connect.getPin(pin);
+                System.out.println("PINinLOGIC::::::"+pin);
                 HomeForm home = new HomeForm();
                 home.setVisible(true);
                 this.dispose();

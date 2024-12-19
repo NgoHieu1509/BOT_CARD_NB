@@ -103,7 +103,7 @@ public boolean disconnectCard(){
             
         }
         catch(CardException ex){
-            //return "Error";
+            System.out.println("ERROR::::::::"+ex);
         }
     
     }
@@ -180,11 +180,30 @@ public boolean createPIN(String pin){
                     return false;
                 default:
                     return false;
-            }
-            
+            }           
         }
         catch(Exception ex){
             return false;
+        }
+    }
+  public void getPin(String pin){
+        connectapplet();
+        byte[] pinbyte =  pin.getBytes();
+        try{
+            
+            factory = TerminalFactory.getDefault();
+            terminals = factory.terminals().list();
+            
+            terminal = terminals.get(0);
+            
+            card = terminal.connect("*");
+            
+            channel = card.getBasicChannel();
+            
+            ResponseAPDU answer = channel.transmit(new CommandAPDU(0xA0,0x70,0x00,0x00,pinbyte));           
+        }
+        catch(Exception ex){
+            System.out.println("ERROR::::::::"+ex);
         }
     }
  

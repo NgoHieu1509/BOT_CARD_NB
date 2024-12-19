@@ -102,7 +102,7 @@ public class DoiMaPinForm extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -114,10 +114,11 @@ public class DoiMaPinForm extends javax.swing.JFrame {
         String txtSave = txtNewPin.getText();
         String txtXacnhan = txtConfirmPin.getText();
         // ConnectJavaCard connect = new ConnectJavaCard();
-        
+        System.out.println("PININCREATE::::::"+txtSave);
         if(txtSave.equals(txtXacnhan) && !txtSave.equals("Botcard")){
             if(connect.createPIN(txtSave)){
                 //HomeForm home = new HomeForm();
+                connect.getPin(txtSave);
                 StartForm form = new StartForm();
                 JOptionPane.showMessageDialog(null, "Đổi mã PIN thành công!");
                 //home.setVisible(true);
