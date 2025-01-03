@@ -986,6 +986,28 @@ public class HomeForm extends javax.swing.JFrame {
             return;
         }
         
+        String id = card.strID;                     // ID người dùng
+        String name = card.strName;                 // Tên
+        String address = card.strAddress;           // Địa chỉ
+        String dob = card.strDate;                  // Ngày sinh
+        String licensePlate = card.strNumberPlate;  // Biển số xe
+        System.out.println("start ");
+        try {
+            
+            // Gửi dữ liệu lên DB
+            boolean success = DBConnection.updateUserInfo(id, name, address, dob, licensePlate);
+
+            if (success) {
+                JOptionPane.showMessageDialog(this, "Cập nhật dữ liệu thành công vào cơ sở dữ liệu!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Lỗi cập nhật khi lưu dữ liệu vào cơ sở dữ liệu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+    //        JOptionPane.showMessageDialog(this, "Lỗi: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            System.out.println("error db");
+        }
+        System.out.println("send done");
         // Get string data
         String dataSend = String.join(",",card.strID, card.strName, card.strDate, card.strAddress, card.strNumberPlate);
         card.data = dataSend.getBytes(StandardCharsets.UTF_8);
