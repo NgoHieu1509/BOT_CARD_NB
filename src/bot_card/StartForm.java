@@ -27,14 +27,15 @@ import org.xml.sax.Attributes;
  * @author N ~ N
  */
 public class StartForm extends javax.swing.JFrame {
-    
+
     private final ConnectJavaCard card = new ConnectJavaCard();
+
     /**
      * Creates new form StartForm
      */
     public StartForm() {
         initComponents();
-        
+
         // enable id = true
         jTextField1.setEnabled(false);
     }
@@ -180,23 +181,22 @@ public class StartForm extends javax.swing.JFrame {
     private void btnAcpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcpActionPerformed
         // TODO add your handling code here:
         // Bien tam de generate ID - age
+
         int age;
-        
+
         card.strID = jTextField1.getText();
         card.strName = jTextField2.getText();
         card.strAddress = jTextField4.getText();
         card.strDate = jTextField3.getText();
         card.strNumberPlate = jTextField5.getText();
-        
-        
-        
+
         // kiem tra anh da chon.
         /*
         if (jlbUpLoad.getIcon() == null) {
             JOptionPane.showMessageDialog(this, "Empty image");
             return;
         }
-        */
+         */
         if (!isValidName(card.strName)) {
             // Notify null
             if (card.strName == null || card.strName.trim().isEmpty()) {
@@ -209,7 +209,7 @@ public class StartForm extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Tên quá dài (> 50 kí tự)");
             } else {
                 JOptionPane.showMessageDialog(this, "Trong tên có số");
-            } 
+            }
             return;
         }
         /*
@@ -217,75 +217,109 @@ public class StartForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Empty field ID");
             return;
         }
-        */
+         */
         if (!isValidAddress(card.strAddress)) {
             // Check address null
             if (card.strAddress == null || card.strAddress.trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Trống trường địa chỉ");
                 return;
             }
-            
+
             if (card.strAddress.length() < 2) {
                 JOptionPane.showMessageDialog(this, "Địa chỉ quá ngắn (< 2 kí tự)");
             } else {
                 JOptionPane.showMessageDialog(this, "Địa chỉ quá dài (> 50 kí tự)");
-            } 
+            }
             return;
-            
+
         }
-        
+
         if (!isValidDob(card.strDate)) {
             return;
         }
-        
+
         if (!isValidNumberPlate(card.strNumberPlate)) {
-            
+
             if (card.strNumberPlate.isEmpty()) {
                 return;
             }
-            
+
             JOptionPane.showMessageDialog(this, "Sai định dạng biển số: Eg: 30A-888.88");
             return;
         }
-        
+
         try {
             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate dobDate = LocalDate.parse(card.strDate, dateTimeFormatter);
             LocalDate currentDate = LocalDate.now();
-            
+
             age = currentDate.getYear() - dobDate.getYear();
-            
+
             card.strID = CustomIDGenerator.generateID(age);
         } catch (Exception e) {
             System.out.println("Khong tim duoc tuoi");
         }
-        
-        
-        
+
+        String id = card.strID;                     // ID người dùng
+        String name = card.strName;                 // Tên
+        String address = card.strAddress;           // Địa chỉ
+        String dob = card.strDate;                  // Ngày sinh
+        String licensePlate = card.strNumberPlate;  // Biển số xe
+
+
+        System.out.println("Start");
+
+        try {
+            String connectResult = card.connectapplet();
+            System.out.println("Result connect to card: " + connectResult);
+
+            // Kiểm tra channel có null không
+            if (card.channel == null) {
+                throw new Exception("Channel Null. Check connect.");
+            }
+            // Lấy khóa công khai từ applet
+            String publicKey = card.getPublicKey();
+            System.out.println("Public Key: " + publicKey);
+            // Gửi dữ liệu lên DB
+            boolean success = DBConnection.UserInfo(id, name, address, dob, licensePlate, publicKey);
+
+            if (success) {
+                JOptionPane.showMessageDialog(this, "Lưu dữ liệu thành công vào cơ sở dữ liệu!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Lỗi khi lưu dữ liệu vào cơ sở dữ liệu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Lỗi: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error DB");
+        }
+
+        System.out.println("Send done");
+
         // Set data app -> card
-        String dataSend = String.join(",",card.strID, card.strName,card.strDate, card.strAddress,card.strNumberPlate);
+        String dataSend = String.join(",", card.strID, card.strName, card.strDate, card.strAddress, card.strNumberPlate);
         card.data = dataSend.getBytes(StandardCharsets.UTF_8);
-         // Send request
+        // Send request
         ResponseAPDU respond;
         respond = card.sendRequest(
-                new CommandAPDU(0x00,config.BOTAPPLET.INS_SET_DATA,0x00,0x00,card.data)
+                new CommandAPDU(0x00, config.BOTAPPLET.INS_SET_DATA, 0x00, 0x00, card.data)
         );
-        
+
         System.out.println(respond.toString());
         String result = Integer.toHexString(respond.getSW());
-        if(result.equals("9000")) {
+        if (result.equals("9000")) {
             System.out.println("Send data to card success");
             JOptionPane.showMessageDialog(this, "Khởi tạo dữ liệu thành công.");
         } else {
             System.out.println("Error command APDU");
             return;
         }
-        
+
         // Navigate to HomeForm
         HomeForm home = new HomeForm();
         home.setVisible(true);
         this.dispose();
-        
+
     }//GEN-LAST:event_btnAcpActionPerformed
 
     private void jlbxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbxMouseClicked
@@ -296,10 +330,10 @@ public class StartForm extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         // Image data process
-                byte[] originalImageBytes  = selectImage();
-        if (originalImageBytes  != null) {
+        byte[] originalImageBytes = selectImage();
+        if (originalImageBytes != null) {
             JOptionPane.showMessageDialog(this, "Image selected successfully!");
-            
+
             try {
                 card.sendImage(originalImageBytes);
             } catch (CardException ex) {
@@ -307,24 +341,24 @@ public class StartForm extends javax.swing.JFrame {
                 return;
             }
         }
-        
-        ImageIcon imageIcon = new ImageIcon(originalImageBytes );
-        
+
+        ImageIcon imageIcon = new ImageIcon(originalImageBytes);
+
         // Lay kich thuoc khung cua label
         int width = jlbUpLoad.getWidth();
         int height = jlbUpLoad.getHeight();
-        
+
         //Scale image
         Image scaledImage;
         scaledImage = imageIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
         jlbUpLoad.setIcon(new ImageIcon(scaledImage));
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
-    
+
     // Validate name
     public boolean isValidName(String name) {
         if (name == null || name.trim().isEmpty()) {
@@ -333,37 +367,37 @@ public class StartForm extends javax.swing.JFrame {
         String regex = "^[\\p{L}\\s]{2,50}$"; // Only alphabet, leng = 2 -> 50
         return name.matches(regex);
     }
-    
+
     // Validate dob
     public boolean isValidDob(String dob) {
-        
+
         if (dob == null || dob.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Trống trường ngày sinh");
             return false;
         }
-        
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         // Check dob is exsit (eg: 30/02/2002)
         dateFormat.setLenient(false);
-        
+
         try {
             Date dateOfBirth = dateFormat.parse(dob);
             Date currentDate = new Date();
-            
+
             // Kiem tra ngay sinh co lon hon hien tai
             // Eg: DoB = 30/12/2024 (Error)
             if (dateOfBirth.after(currentDate)) {
                 JOptionPane.showMessageDialog(this, "Bạn chưa được sinh ra.");
                 return false;
             }
-            
+
             // Kiem tra tuoi co phu hop khong
             long ageInMillis = currentDate.getTime() - dateOfBirth.getTime();
-            int age = (int) (ageInMillis / (1000L * 60 * 60 * 24 *365));
-            
+            int age = (int) (ageInMillis / (1000L * 60 * 60 * 24 * 365));
+
             if (age < 18) {
                 JOptionPane.showMessageDialog(this, "Bạn chưa đủ tuổi.");
-                return false;  
+                return false;
             } else if (age > 90) {
                 JOptionPane.showMessageDialog(this, "Bạn quá tuổi");
                 return false;
@@ -371,13 +405,13 @@ public class StartForm extends javax.swing.JFrame {
                 return true;
             }
             //return ((age >= 18) && (age <=90));
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Ngày sinh không tồn tại");
             return false;
         }
     }
-    
+
     // Validate address
     public boolean isValidAddress(String address) {
         if (address == null || address.trim().isEmpty()) {
@@ -399,7 +433,6 @@ public class StartForm extends javax.swing.JFrame {
         return numberPlate.matches(regex);
     }
 
-    
     private byte[] selectImage() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileFilter(new FileNameExtensionFilter("Image Files", "jpg", "png", "jpeg", "bmp"));
@@ -415,6 +448,7 @@ public class StartForm extends javax.swing.JFrame {
         }
         return null;
     }
+
     /**
      * @param args the command line arguments
      */
@@ -473,4 +507,8 @@ public class StartForm extends javax.swing.JFrame {
     private javax.swing.JLabel jlbUpLoad;
     private javax.swing.JLabel jlbx;
     // End of variables declaration//GEN-END:variables
+
+    private String getPublicKeyFromCard() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
