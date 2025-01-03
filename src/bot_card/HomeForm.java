@@ -79,7 +79,17 @@ public class HomeForm extends javax.swing.JFrame {
             jTextField8.setText(getDataString(config.BOTAPPLET.P1_OUT_ADDRESS));
             // Field 5 - Number plate
             jTextField5.setText(getDataString(config.BOTAPPLET.P1_OUT_NUMBER_PLATE));
-            
+//                String data = getData();
+//                System.out.println("Get Data: " + data);
+//
+//                // Split the data using the "|" separator
+//                String[] fields = data.split(",");
+//                if (fields.length == 5) {
+//                    jTextField12.setText(fields[0]);
+//                    jTextField6.setText(fields[1]);
+//                    jTextField7.setText(fields[2]);
+//                    jTextField8.setText(fields[3]);
+//                    jTextField5.setText(fields[4]);
              // Image
             try {
                 card.image = card.fetchImageData();
@@ -91,7 +101,7 @@ public class HomeForm extends javax.swing.JFrame {
         System.out.println("Chua set data -> card");
     }      
 }
-
+    
     public HomeForm(JButton btnCanPIN, JButton btnHuy, JButton btnNapThem1, JButton btnNapTien, JButton btnThoat, JButton btnUP, JButton btnup1, JButton btnupPIN, JLabel jLabel1, JLabel jLabel10, JLabel jLabel12, JLabel jLabel13, JLabel jLabel14, JLabel jLabel15, JLabel jLabel16, JLabel jLabel17, JLabel jLabel18, JLabel jLabel19, JLabel jLabel2, JLabel jLabel20, JLabel jLabel21, JLabel jLabel22, JLabel jLabel23, JLabel jLabel24, JLabel jLabel25, JLabel jLabel3, JLabel jLabel4, JLabel jLabel8, JPanel jPanel1, JPanel jPanel2, JPanel jPanel3, JScrollPane jScrollPane1, JTable jTable1, JTextField jTextField10, JTextField jTextField2, JTextField jTextField3, JTextField jTextField4, JTextField jTextField5, JTextField jTextField6, JTextField jTextField7, JTextField jTextField8, JLabel jlbCancel, JLabel jlbConnect, JLabel jlbHis, JLabel jlbINFO, JLabel jlbNap, JLabel jlbPIN, JLabel jlbSoDu, JPanel jpnConnect, JPanel jpnHISTORY, JPanel jpnINFO, JPanel jpnNapTien, JPanel jpnPIN, JPanel jpnSoDu, JPanel jpnbank1, JPanel jpnhis, JPanel jpnif2, JPanel jpnpin, JPanel jpnsoDu2, JLabel juploadpt1) throws HeadlessException {
         this.btnCanPIN = btnCanPIN;
         this.btnHuy = btnHuy;
@@ -773,8 +783,9 @@ public class HomeForm extends javax.swing.JFrame {
             );
 
             String result = Integer.toHexString(respond.getSW());
-            if(result.equals("9000")) {
+            if(result.equals("9000")) {              
                 kq = new String(respond.getData(),StandardCharsets.UTF_8);
+                System.out.println("OUTDATA::::::::::::"+kq);
                 //kq = hexToString(respond.getData());
             } else {
                 System.out.println("Error command APDU");
@@ -784,6 +795,25 @@ public class HomeForm extends javax.swing.JFrame {
         }
         return kq;
     }
+//    private String getData() {
+//    try {
+//        // Tạo và gửi lệnh APDU cho việc lấy dữ liệu
+//        CommandAPDU getDataCommand = new CommandAPDU(0x00, config.BOTAPPLET.INS_GET_DATA, 0x00, 0x00);
+//        ResponseAPDU response = card.sendRequest(getDataCommand);
+//        
+//        // Kiểm tra mã trạng thái và trả về dữ liệu
+//        if (response.getSW() == 0x9000) {
+//            // Dữ liệu được trả về dưới dạng chuỗi byte, chuyển thành String
+//            byte[] data = response.getData();
+//            return new String(data, StandardCharsets.UTF_8); // Trả về dữ liệu dưới dạng String
+//        } else {
+//            return "Lỗi khi lấy dữ liệu";
+//        }
+//    } catch (Exception e) {
+//        e.printStackTrace();
+//        return "Lỗi kết nối";
+//    }
+//}
     
         private void displayImage(byte[] imageBytes) throws Exception {
         // Chuyển đổi byte array thành BufferedImage
@@ -876,6 +906,12 @@ public class HomeForm extends javax.swing.JFrame {
 
     private void btnupPINActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnupPINActionPerformed
         // TODO add your handling code here:
+         card.strID = jTextField12.getText();
+        card.strName = jTextField6.getText();
+        card.strAddress = jTextField8.getText();
+        card.strDate = jTextField7.getText();
+        card.strNumberPlate = jTextField5.getText();
+        ConnectJavaCard connect = new ConnectJavaCard();
          String oldPin = jTextField2.getText();
         String newPin = jTextField4.getText();
         String cofirmPin = jTextField3.getText();
@@ -883,10 +919,21 @@ public class HomeForm extends javax.swing.JFrame {
         if(newPin.equals(cofirmPin) && !newPin.equals(oldPin)){
             
             // Previous code
-            // ConnectJavaCard connect = new ConnectJavaCard();
             if(card.ChangePIN(oldPin, newPin)){
+                connect.getPin(newPin);
+                // Get string data
+                String dataSend = String.join(",",card.strID, card.strName, card.strDate, card.strAddress, card.strNumberPlate);
+                card.data = dataSend.getBytes(StandardCharsets.UTF_8);
+        
+                // Send request
+                ResponseAPDU respond;
+                respond = card.sendRequest(
+                    new CommandAPDU(0x00,config.BOTAPPLET.INS_SET_DATA,0x00,0x00,card.data)
+                );
+                System.out.println("PININCHANGE:::::::::::"+newPin);
                 System.out.println("Đổi mã PIN thành công!");
                 new loginForm().setVisible(true);
+                this.dispose();
             }
             else{
                 System.out.println("Đổi mã PIN không thành công!");
@@ -939,6 +986,28 @@ public class HomeForm extends javax.swing.JFrame {
             return;
         }
         
+        String id = card.strID;                     // ID người dùng
+        String name = card.strName;                 // Tên
+        String address = card.strAddress;           // Địa chỉ
+        String dob = card.strDate;                  // Ngày sinh
+        String licensePlate = card.strNumberPlate;  // Biển số xe
+        System.out.println("start ");
+        try {
+            
+            // Gửi dữ liệu lên DB
+            boolean success = DBConnection.updateUserInfo(id, name, address, dob, licensePlate);
+
+            if (success) {
+                JOptionPane.showMessageDialog(this, "Cập nhật dữ liệu thành công vào cơ sở dữ liệu!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Lỗi cập nhật khi lưu dữ liệu vào cơ sở dữ liệu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+    //        JOptionPane.showMessageDialog(this, "Lỗi: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            System.out.println("error db");
+        }
+        System.out.println("send done");
         // Get string data
         String dataSend = String.join(",",card.strID, card.strName, card.strDate, card.strAddress, card.strNumberPlate);
         card.data = dataSend.getBytes(StandardCharsets.UTF_8);
@@ -952,7 +1021,7 @@ public class HomeForm extends javax.swing.JFrame {
         String result = Integer.toHexString(respond.getSW());
         if(result.equals("9000")) {
             System.out.println("Send data to card success");
-            JOptionPane.showMessageDialog(this, "Cap nhat du lieu thanh cong.");
+            JOptionPane.showMessageDialog(this, "Cập nhật dữ liệu thành công.");
         } else {
             System.out.println("Error command APDU");
         }

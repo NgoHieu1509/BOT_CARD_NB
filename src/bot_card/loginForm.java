@@ -69,13 +69,6 @@ public class loginForm extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setText("NHẬP MÃ PIN : ");
 
-        txtmapin.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        txtmapin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtmapinActionPerformed(evt);
-            }
-        });
-
         jCheckBox1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jCheckBox1.setText("Hiện mã pin");
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -230,8 +223,9 @@ public class loginForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         String pin = txtmapin.getText();
         // ConnectJavaCard connect = new ConnectJavaCard();
-        
+            
         if (connect.verifyPin(pin)) {
+            
             if (firstUSE == 1) {
                 
                 DoiMaPinForm form = new DoiMaPinForm();
@@ -239,7 +233,8 @@ public class loginForm extends javax.swing.JFrame {
                 this.dispose();
                 
             } else {
-                
+                connect.getPin(pin);
+                System.out.println("PINinLOGIC::::::"+pin);
                 HomeForm home = new HomeForm();
                 home.setVisible(true);
                 this.dispose();
@@ -249,10 +244,6 @@ public class loginForm extends javax.swing.JFrame {
             System.out.println("Error");
         }
     }//GEN-LAST:event_btnLoginUserActionPerformed
-
-    private void txtmapinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtmapinActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtmapinActionPerformed
 
     /**
      * @param args the command line arguments

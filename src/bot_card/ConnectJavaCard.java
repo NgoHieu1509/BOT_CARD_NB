@@ -5,7 +5,14 @@
 package bot_card;
 
 import java.io.ByteArrayOutputStream;
+import java.math.BigInteger;
+import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.RSAPublicKeySpec;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 import javax.smartcardio.Card;
 import javax.smartcardio.CardChannel;
@@ -21,9 +28,9 @@ import javax.swing.JOptionPane;
  * @author Admin
  */
 public class ConnectJavaCard {
-    
+
     // Properties
-    byte [] data;
+    byte[] data;
     byte[] image;
     public String strID;
     public String strName;
@@ -32,105 +39,104 @@ public class ConnectJavaCard {
     public String strNumberPlate;
     public String message;
 
-    
     // Khai bao doi tuong ket noi applet
     TerminalFactory factory;
     List<CardTerminal> terminals;
     CardTerminal terminal;
     Card card;
     CardChannel channel;
-  public String connectapplet() {
-      String kq="";
-  try {
-   // Display the list of terminals
-   factory = TerminalFactory.getDefault();
-   terminals = factory.terminals().list();
-   System.out.println("Terminals: " + terminals);
 
-   // Use the first terminal
-   terminal = terminals.get(0);
-
-   // Connect wit hthe card
-   card = terminal.connect("*");
-   System.out.println("card: " + card);
-   channel = card.getBasicChannel();
-
-   // Send Select Applet command
-   byte[] aid = {(byte) 0x11,0x22,0x33,0x44,0x55,0x01};
-   ResponseAPDU answer = channel.transmit(new CommandAPDU(0x00, 0xA4, 0x04, 0x00, aid));
-   kq = answer.toString();
-   data = answer.getData();
-   System.out.println("answer::::: " + answer.toString());
-   return kq;
-   } catch(CardException e) {
-   System.out.println("Error::::: " + e.toString());
-   }
-  return kq;
- }
-  
-public boolean disconnectCard(){
-    try {
-        factory = TerminalFactory.getDefault();
-        terminals = factory.terminals().list();
-        System.out.println("Terminals: " + terminals);
-
-   // Use the first terminal
-        terminal = terminals.get(0);
-
-   // Connect wit hthe card
-        card = terminal.connect("*");
-        card.disconnect(true);
-        return true;
-    } catch (CardException e) {
-        System.out.println("ERROR::::::::"+e);
-    }
-    return false;
-}
-
-    public void setUp(){
-        
-        try{
+    public String connectapplet() {
+        String kq = "";
+        try {
+            // Display the list of terminals
             factory = TerminalFactory.getDefault();
             terminals = factory.terminals().list();
-            
+            System.out.println("Terminals: " + terminals);
+
+            // Use the first terminal
             terminal = terminals.get(0);
-            
+
+            // Connect wit hthe card
             card = terminal.connect("*");
-            
+            System.out.println("card: " + card);
             channel = card.getBasicChannel();
-            
-            ResponseAPDU answer = channel.transmit(new CommandAPDU(0xB0,config.BOTAPPLET.INS_SETUP,0x00,0x00));
-            
+
+            // Send Select Applet command
+            byte[] aid = {(byte) 0x11, 0x22, 0x33, 0x44, 0x55, 0x01};
+            ResponseAPDU answer = channel.transmit(new CommandAPDU(0x00, 0xA4, 0x04, 0x00, aid));
+            kq = answer.toString();
+            data = answer.getData();
+            System.out.println("answer::::: " + answer.toString());
+            return kq;
+        } catch (CardException e) {
+            System.out.println("Error::::: " + e.toString());
         }
-        catch(CardException ex){
-            //return "Error";
-        }
-    
+        return kq;
     }
-  
-public boolean createPIN(String pin){
-        
-        byte[] pinbyte =  pin.getBytes();
+
+    public boolean disconnectCard() {
+        try {
+            factory = TerminalFactory.getDefault();
+            terminals = factory.terminals().list();
+            System.out.println("Terminals: " + terminals);
+
+            // Use the first terminal
+            terminal = terminals.get(0);
+
+            // Connect wit hthe card
+            card = terminal.connect("*");
+            card.disconnect(true);
+            return true;
+        } catch (CardException e) {
+            System.out.println("ERROR::::::::" + e);
+        }
+        return false;
+    }
+
+    public void setUp() {
+
+        try {
+            factory = TerminalFactory.getDefault();
+            terminals = factory.terminals().list();
+
+            terminal = terminals.get(0);
+
+            card = terminal.connect("*");
+
+            channel = card.getBasicChannel();
+
+            ResponseAPDU answer = channel.transmit(new CommandAPDU(0xB0, config.BOTAPPLET.INS_SETUP, 0x00, 0x00));
+
+        } catch (CardException ex) {
+            System.out.println("ERROR::::::::" + ex);
+        }
+
+    }
+
+    public boolean createPIN(String pin) {
+
+        byte[] pinbyte = pin.getBytes();
         byte len = (byte) pinbyte.length;
-        
-        byte[] send = new byte[len+1];
+
+        byte[] send = new byte[len + 1];
         send[0] = len;
-        for(int i =1;i<send.length;i++){
-            send[i] = pinbyte[i-1];
+        for (int i = 1; i < send.length; i++) {
+            send[i] = pinbyte[i - 1];
         }
-        try{
-            
+        try {
+
             factory = TerminalFactory.getDefault();
             terminals = factory.terminals().list();
-            
+
             terminal = terminals.get(0);
-            
+
             card = terminal.connect("*");
-            
+
             channel = card.getBasicChannel();
-            
-            ResponseAPDU answer = channel.transmit(new CommandAPDU(0xA0,config.BOTAPPLET.INS_CREATE_PIN,0x00,0x03,send));
-            
+
+            ResponseAPDU answer = channel.transmit(new CommandAPDU(0xA0, config.BOTAPPLET.INS_CREATE_PIN, 0x00, 0x03, send));
+
             message = answer.toString();
             switch (((message.split("="))[1]).toUpperCase()) {
                 case config.STATUS.SW_NO_ERROR:
@@ -144,27 +150,27 @@ public boolean createPIN(String pin){
                 default:
                     return false;
             }
-            
-        }
-        catch(Exception ex){
+
+        } catch (Exception ex) {
             return false;
         }
     }
- public boolean verifyPin(String pin){
+
+    public boolean verifyPin(String pin) {
         connectapplet();
-        byte[] pinbyte =  pin.getBytes();
-        try{
-            
+        byte[] pinbyte = pin.getBytes();
+        try {
+
             factory = TerminalFactory.getDefault();
             terminals = factory.terminals().list();
-            
+
             terminal = terminals.get(0);
-            
+
             card = terminal.connect("*");
-            
+
             channel = card.getBasicChannel();
-            
-            ResponseAPDU answer = channel.transmit(new CommandAPDU(0xA0,config.BOTAPPLET.INS_VERIFY_PIN,0x00,0x00,pinbyte));
+
+            ResponseAPDU answer = channel.transmit(new CommandAPDU(0xA0, config.BOTAPPLET.INS_VERIFY_PIN, 0x00, 0x00, pinbyte));
             message = Integer.toHexString(answer.getSW());
             switch (message.toUpperCase()) {
                 case config.STATUS.SW_NO_ERROR:
@@ -181,43 +187,61 @@ public boolean createPIN(String pin){
                 default:
                     return false;
             }
-            
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
             return false;
         }
     }
- 
- public boolean ChangePIN(String oldPin,String newPin){
+
+    public void getPin(String pin) {
         connectapplet();
-        byte[] oldPinByte =  oldPin.getBytes();
-        byte oldPinLen = (byte) oldPinByte.length;
-        
-        byte[] newPinByte =  newPin.getBytes();
-        byte newPinLen = (byte) newPinByte.length;
-        
-        byte[] send = new byte[newPinLen+oldPinLen+2];
-        int offSet = 0;
-        send[offSet] = oldPinLen;
-        offSet+=1;
-        System.arraycopy(oldPinByte, 0, send, offSet, oldPinLen);
-        offSet+=oldPinLen;
-        send[offSet] = newPinLen;
-        offSet+=1;
-        System.arraycopy(newPinByte, 0, send, offSet, newPinLen);
-        try{
-            
+        byte[] pinbyte = pin.getBytes();
+        try {
+
             factory = TerminalFactory.getDefault();
             terminals = factory.terminals().list();
-            
+
             terminal = terminals.get(0);
-            
+
             card = terminal.connect("*");
-            
+
             channel = card.getBasicChannel();
-            
-            ResponseAPDU answer = channel.transmit(new CommandAPDU(0xA0,config.BOTAPPLET.INS_CHANGE_PIN,0x00,0x00,send));
-            
+
+            ResponseAPDU answer = channel.transmit(new CommandAPDU(0xA0, 0x70, 0x00, 0x00, pinbyte));
+        } catch (Exception ex) {
+            System.out.println("ERROR::::::::" + ex);
+        }
+    }
+
+    public boolean ChangePIN(String oldPin, String newPin) {
+        connectapplet();
+        byte[] oldPinByte = oldPin.getBytes();
+        byte oldPinLen = (byte) oldPinByte.length;
+
+        byte[] newPinByte = newPin.getBytes();
+        byte newPinLen = (byte) newPinByte.length;
+
+        byte[] send = new byte[newPinLen + oldPinLen + 2];
+        int offSet = 0;
+        send[offSet] = oldPinLen;
+        offSet += 1;
+        System.arraycopy(oldPinByte, 0, send, offSet, oldPinLen);
+        offSet += oldPinLen;
+        send[offSet] = newPinLen;
+        offSet += 1;
+        System.arraycopy(newPinByte, 0, send, offSet, newPinLen);
+        try {
+
+            factory = TerminalFactory.getDefault();
+            terminals = factory.terminals().list();
+
+            terminal = terminals.get(0);
+
+            card = terminal.connect("*");
+
+            channel = card.getBasicChannel();
+
+            ResponseAPDU answer = channel.transmit(new CommandAPDU(0xA0, config.BOTAPPLET.INS_CHANGE_PIN, 0x00, 0x00, send));
+
             message = answer.toString();
             switch (((message.split("="))[1]).toUpperCase()) {
                 case config.STATUS.SW_NO_ERROR:
@@ -232,32 +256,31 @@ public boolean createPIN(String pin){
                 default:
                     return false;
             }
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
             return false;
         }
     }
- 
-  public boolean UnblockPin(byte [] aid){
-        try{
-            
+
+    public boolean UnblockPin(byte[] aid) {
+        try {
+
             factory = TerminalFactory.getDefault();
             terminals = factory.terminals().list();
-            
+
             terminal = terminals.get(0);
-            
+
             card = terminal.connect("*");
-            
+
             channel = card.getBasicChannel();
-            
-            ResponseAPDU selectBlockcard = channel.transmit(new CommandAPDU(0x00,0xA4,0x00,0x00,aid));
-            
+
+            ResponseAPDU selectBlockcard = channel.transmit(new CommandAPDU(0x00, 0xA4, 0x00, 0x00, aid));
+
             String check = Integer.toHexString(selectBlockcard.getSW());
-            
-            if(check.equals(config.STATUS.SW_NO_ERROR)){
+
+            if (check.equals(config.STATUS.SW_NO_ERROR)) {
                 CardChannel channel2 = card.getBasicChannel();
-            
-            ResponseAPDU unblockCard = channel2.transmit(new CommandAPDU(config.BOTAPPLET.CLA,config.BOTAPPLET.INS_UNBLOCK_PIN,0x00,0x00));
+
+                ResponseAPDU unblockCard = channel2.transmit(new CommandAPDU(config.BOTAPPLET.CLA, config.BOTAPPLET.INS_UNBLOCK_PIN, 0x00, 0x00));
                 message = unblockCard.toString();
                 switch (((message.split("="))[1]).toUpperCase()) {
                     case config.STATUS.SW_NO_ERROR:
@@ -269,26 +292,24 @@ public boolean createPIN(String pin){
                     default:
                         return false;
                 }
-            }
-            else{
+            } else {
                 return false;
             }
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
             return false;
         }
     }
-  
-    public ResponseAPDU sendRequest(CommandAPDU commandAPDU){
+
+    public ResponseAPDU sendRequest(CommandAPDU commandAPDU) {
         ResponseAPDU respond;
         String kq = connectapplet();
-        if(!kq.contains("SW=9000")) {
+        if (!kq.contains("SW=9000")) {
             System.out.println("Connection error");
         } else {
             System.out.println("Connect to card");
             setUp();
             System.out.println("Set up done!");
-            
+
             try {
                 factory = TerminalFactory.getDefault();
                 terminals = factory.terminals().list();
@@ -301,23 +322,22 @@ public boolean createPIN(String pin){
             } catch (CardException e) {
 
             }
-            
+
         }
         return null;
     }
-    
-    
-        public void sendImage(byte[] image) throws CardException {
+
+    public void sendImage(byte[] image) throws CardException {
         connectapplet();
         setUp();
         int chunk_size = 243;
         int chunk_blocks = (image.length + chunk_size - 1) / chunk_size;
-        for(int index = 0; index < chunk_blocks; index++) {
+        for (int index = 0; index < chunk_blocks; index++) {
             int offset = index * chunk_size;
             int length = (chunk_size < (image.length - offset)) ? chunk_size : (image.length - offset);
-            
-            byte[] chunks = Arrays.copyOfRange(image, offset, offset+length);
-            
+
+            byte[] chunks = Arrays.copyOfRange(image, offset, offset + length);
+
             CommandAPDU commandAPDU = new CommandAPDU(
                     0x00,
                     config.BOTAPPLET.INS_SEND_IMAGE,
@@ -325,16 +345,16 @@ public boolean createPIN(String pin){
                     0x00,
                     chunks
             );
-            
+
             System.out.println("Sending chunk " + (index + 1) + "/" + chunk_blocks);
             ResponseAPDU response = channel.transmit(commandAPDU);
-            
+
             if (response.getSW() != 0x9000) {
-                throw new CardException("Error sending chunk: "+ (index+1));
+                throw new CardException("Error sending chunk: " + (index + 1));
             }
         }
     }
-    
+
     public byte[] fetchImageData() throws Exception {
         connectapplet();
         setUp();
@@ -351,11 +371,11 @@ public boolean createPIN(String pin){
             // Lấy dữ liệu chunk từ phản hồi
             buffer = response.getData();
             chunkSize = buffer.length;
-            
+
             if (chunkSize == 0) {
                 break;
             }
-            
+
             // Ghi chunk vào bộ đệm
             imageData.write(buffer, 0, chunkSize);
 
@@ -370,8 +390,42 @@ public boolean createPIN(String pin){
 
         return imageData.toByteArray();
     }
-    
-        
-     
-    
+
+    public String getPublicKey() throws CardException, NoSuchAlgorithmException, InvalidKeySpecException {
+        try {
+            // Tạo lệnh APDU với CLA=0x00 thay vì 0x80 để phù hợp với applet
+            CommandAPDU command = new CommandAPDU(0x00, config.RSAAPPLET.INS_GET_PUBKEY, 0x00, 0x00, 256);
+            ResponseAPDU response = channel.transmit(command);
+
+            if (response.getSW() != 0x9000) {
+                throw new CardException("Failed to get public key. SW: 0x"
+                        + String.format("%04X", response.getSW()));
+            }
+
+            byte[] publicKeyData = response.getData();
+
+            // Với RSA 1024 bit, modulus là 128 bytes
+            if (publicKeyData.length < 128) {
+                throw new CardException("Invalid public key data length: " + publicKeyData.length);
+            }
+
+            byte[] modulus = Arrays.copyOfRange(publicKeyData, 0, 128);
+            byte[] exponent = Arrays.copyOfRange(publicKeyData, 128, publicKeyData.length);
+
+            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+            RSAPublicKeySpec keySpec = new RSAPublicKeySpec(
+                    new BigInteger(1, modulus),
+                    new BigInteger(1, exponent)
+            );
+
+            PublicKey publicKey = keyFactory.generatePublic(keySpec);
+            return Base64.getEncoder().encodeToString(publicKey.getEncoded());
+
+        } catch (CardException e) {
+            throw new CardException("Smart card communication error: " + e.getMessage());
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+            throw e; // Rethrow these specific exceptions
+        }
+    }
+
 }
